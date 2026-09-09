@@ -1,0 +1,23 @@
+{{- $acceptImage := resources.Get "images/cookie-easter-egg/accept-cookies.jpg" -}}
+{{- $rejectImage := resources.Get "images/cookie-easter-egg/reject-cookies.jpg" -}}
+{{- $cookieScript := resources.Get "js/cookie-easter-egg.js" | minify | fingerprint -}}
+{{- if and $acceptImage $rejectImage $cookieScript }}
+<script
+  defer
+  src="{{ $cookieScript.RelPermalink }}"
+  integrity="{{ $cookieScript.Data.Integrity }}"
+  crossorigin="anonymous"
+  data-cookie-accept-image="{{ $acceptImage.RelPermalink }}"
+  data-cookie-reject-image="{{ $rejectImage.RelPermalink }}"></script>
+{{- end }}
+
+{{- if eq .Layout "nyc-taxi-mobility-intelligence" }}
+  {{- $taxiStyle := resources.Get "css/nyc-taxi-project.css" | minify | fingerprint -}}
+  {{- $taxiScript := resources.Get "js/nyc-taxi-project.js" | minify | fingerprint -}}
+  {{- if $taxiStyle }}
+<link rel="stylesheet" href="{{ $taxiStyle.RelPermalink }}" integrity="{{ $taxiStyle.Data.Integrity }}" crossorigin="anonymous">
+  {{- end }}
+  {{- if $taxiScript }}
+<script defer src="{{ $taxiScript.RelPermalink }}" integrity="{{ $taxiScript.Data.Integrity }}" crossorigin="anonymous" data-nyc-taxi-api-base="https://nyc-taxi-mobility-94622883081.us-east1.run.app"></script>
+  {{- end }}
+{{- end }}

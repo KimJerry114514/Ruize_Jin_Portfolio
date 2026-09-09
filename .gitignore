@@ -1,0 +1,13 @@
+/node_modules/
+/public/
+/resources/
+.hugo-cache/
+.hugo_build.lock
+.tmp/
+tmp/
+data-source/
+cookies/
+hugo_stats.json
+.DS_Store
+Thumbs.db
+*.log

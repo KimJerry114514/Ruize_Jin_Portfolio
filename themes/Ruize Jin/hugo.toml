@@ -1,0 +1,122 @@
+# Required for layouts/robots.txt to be rendered — Hugo ignores a custom
+# robots.txt template unless this is explicitly enabled.
+# https://gohugo.io/templates/robots/
+enableRobotsTXT = true
+
+[module]
+
+  [module.hugoVersion]
+    extended = true
+    min = "0.158.0"
+
+# Related content configuration
+[related]
+  includeNewer = true
+  threshold = 80
+  toLower = false
+  
+  [[related.indices]]
+    name = "tags"
+    weight = 100
+  
+  [[related.indices]]
+    name = "date"
+    weight = 10
+
+# Performance optimizations
+[markup]
+  [markup.goldmark]
+    [markup.goldmark.renderer]
+      unsafe = true
+  [markup.highlight]
+    lineNos = false
+    noClasses = false
+    style = "github"
+
+[imaging]
+  resampleFilter = "Lanczos"
+  quality = 85
+  anchor = "Smart"
+
+[minify]
+  disableCSS = false
+  disableHTML = false
+  disableJS = false
+  disableJSON = false
+  disableSVG = false
+  disableXML = false
+  minifyOutput = true
+  [minify.tdewolff]
+    [minify.tdewolff.html]
+      keepDefaultAttrVals = true
+      keepWhitespace = false
+    [minify.tdewolff.css]
+      precision = 0
+    [minify.tdewolff.js]
+      precision = 0
+
+
+[outputs]
+  page = ["HTML"]
+  home = ["HTML", "RSS", "JSON"]
+  section = ["HTML", "RSS"]
+  taxonomy = ["HTML", "RSS"]
+  term = ["HTML", "RSS"]
+
+# Taxonomies
+[taxonomies]
+  tag = "tags"
+  category = "categories"
+  author = "authors"
+  series = "series"
+  topic = "topics"
+
+[params]
+
+  [[module.mounts]]
+    source = "archetypes"
+    target = "archetypes"
+
+  [[module.mounts]]
+    source = "assets"
+    target = "assets"
+
+  [[module.mounts]]
+    source = "data"
+    target = "data"
+
+  [[module.mounts]]
+    source = "i18n"
+    target = "i18n"
+
+  [[module.mounts]]
+    source = "layouts"
+    target = "layouts"
+
+  [[module.mounts]]
+    source = "static"
+    target = "static"
+
+  [[module.mounts]]
+    source = "node_modules/bootstrap/scss"
+    target = "assets/scss/bootstrap"
+
+  [[module.mounts]]
+    source = "node_modules/bootstrap/dist/js"
+    target = "assets/js/bootstrap"
+
+  [[module.mounts]]
+    source = "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"
+    target = "assets/js/vendor/bootstrap.bundle.min.js"
+
+  [[module.mounts]]
+    source = "node_modules/bootstrap-print-css/css/bootstrap-print.css"
+    target = "assets/css/bootstrap-print.css"
+  
+  ## Search & sanitization
+  [[module.mounts]]
+    source = "node_modules/fuse.js/dist/fuse.min.js"
+    target = "static/js/fuse.min.js"
+  [[module.mounts]]
+    source = "node_modules/dompurify/dist/purify.min.js"
+    target = "static/js/purify.min.js"

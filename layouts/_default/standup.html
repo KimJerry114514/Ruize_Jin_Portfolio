@@ -1,0 +1,27 @@
+{{ define "main" }}
+<main id="main-content" class="portfolio-page portfolio-standup-page">
+  <div class="container">
+    <header class="portfolio-page-header portfolio-standup-header">
+      <p class="portfolio-eyebrow">Life Beyond Data</p>
+      <h1>{{ .Title }}</h1>
+    </header>
+
+    <section class="portfolio-standup-intro" aria-label="Introduction">
+      {{ .Content }}
+    </section>
+
+    <section class="portfolio-standup-gallery" aria-label="Stand-up comedy photo gallery">
+      {{ range $index, $filename := slice "1.jpg" "2.jpg" "3.jpg" "4.jpg" }}
+        <figure class="portfolio-standup-gallery__item">
+          {{ partial "lazypicture" (dict
+            "src" (printf "images/life/standup/%s" $filename)
+            "width" 720
+            "class" "portfolio-standup-gallery__image"
+            "alt" (printf "Stand-up comedy performance photo %d" (add $index 1))
+          ) }}
+        </figure>
+      {{ end }}
+    </section>
+  </div>
+</main>
+{{ end }}

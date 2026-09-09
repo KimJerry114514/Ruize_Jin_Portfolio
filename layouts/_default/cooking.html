@@ -1,0 +1,96 @@
+{{ define "main" }}
+{{ $dishes := hugo.Data.dishes }}
+{{ $countryCodes := slice }}
+{{ range sort $dishes "country" }}
+  {{ if not (in $countryCodes .country_code) }}
+    {{ $countryCodes = $countryCodes | append .country_code }}
+  {{ end }}
+{{ end }}
+{{ $worldMap := resources.Get "images/life/cooking/world-map.svg" }}
+{{ if not $worldMap }}
+  {{ errorf "Cooking page requires assets/images/life/cooking/world-map.svg" }}
+{{ end }}
+
+<main id="main-content" class="portfolio-page portfolio-cooking-page">
+  <div class="container">
+    <header class="portfolio-page-header portfolio-cooking-header">
+      <p class="portfolio-eyebrow">Life Beyond Data</p>
+      <h1>{{ .Title }}</h1>
+      <div class="portfolio-cooking-intro">{{ .Content }}</div>
+      <p class="portfolio-cooking-stats">
+        {{ len $countryCodes }} countries unlocked
+        <span aria-hidden="true">·</span>
+        {{ len $dishes }} dishes cooked
+      </p>
+    </header>
+
+    <section class="kitchen-atlas" data-kitchen-atlas aria-labelledby="kitchen-map-title">
+      <p class="kitchen-atlas-instruction">
+        <span class="kitchen-atlas-instruction__desktop">Hover over an unlocked country to see what’s cooking.</span>
+        <span class="kitchen-atlas-instruction__touch">Tap an unlocked country to see what’s cooking.</span>
+      </p>
+
+      <div class="kitchen-map-stage">
+        <div class="kitchen-map-shell">
+          {{ $worldMap.Content | safeHTML }}
+        </div>
+
+        <aside class="kitchen-country-panel" aria-live="polite" aria-hidden="true" hidden></aside>
+      </div>
+
+      <div class="kitchen-country-control">
+        <label for="kitchen-country-select">Explore a cuisine</label>
+        <select id="kitchen-country-select" data-country-select>
+          <option value="">Choose a country</option>
+          {{ range $countryCodes }}
+            {{ $code := . }}
+            {{ $countryDishes := where $dishes "country_code" $code }}
+            {{ $countryName := (index $countryDishes 0).country }}
+            <option value="{{ $code }}">{{ $countryName }}</option>
+          {{ end }}
+        </select>
+      </div>
+
+      <div class="kitchen-country-templates" aria-hidden="true">
+        {{ range $countryCodes }}
+          {{ $code := . }}
+          {{ $countryDishes := where $dishes "country_code" $code }}
+          {{ $countryName := (index $countryDishes 0).country }}
+          <template data-country-template="{{ $code }}">
+            <div class="kitchen-country-panel__header">
+              <div>
+                <p class="kitchen-country-panel__name">{{ $countryName }}</p>
+                <p class="kitchen-country-panel__count">
+                  {{ len $countryDishes }} {{ if eq (len $countryDishes) 1 }}dish{{ else }}dishes{{ end }}
+                </p>
+              </div>
+              <button class="kitchen-country-panel__close" type="button" aria-label="Close {{ $countryName }} menu">×</button>
+            </div>
+
+            <ul class="kitchen-dish-grid" data-dish-count="{{ len $countryDishes }}">
+              {{ range $countryDishes }}
+                <li class="kitchen-dish-item">
+                  <figure>
+                    {{ partial "responsive-image.html" (dict
+                      "src" .image
+                      "alt" (printf "%s prepared at home" .name)
+                      "class" "kitchen-dish-item__image"
+                      "sizes" "(min-width: 768px) 180px, 44vw"
+                    ) }}
+                    <figcaption>{{ .name }}</figcaption>
+                  </figure>
+                </li>
+              {{ end }}
+            </ul>
+          </template>
+        {{ end }}
+      </div>
+
+      <script id="kitchen-atlas-data" type="application/json">{{ $dishes | jsonify | safeHTML }}</script>
+    </section>
+  </div>
+</main>
+
+{{ $kitchenAtlasScript := resources.Get "js/kitchen-atlas.js" | minify | fingerprint }}
+<script src="{{ $kitchenAtlasScript.RelPermalink }}" integrity="{{ $kitchenAtlasScript.Data.Integrity }}" defer></script>
+{{ end }}

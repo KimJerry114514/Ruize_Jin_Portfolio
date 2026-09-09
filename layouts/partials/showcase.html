@@ -1,0 +1,102 @@
+{{/* Project override of Adritian's hero. Adds an optional second CTA. */}}
+{{ $sectionId := "showcase" }}
+{{ with .Get "sectionId" }}
+  {{ $sectionId = . }}
+{{ end }}
+
+<section{{ if $sectionId }} id="{{ $sectionId }}"{{ end }} class="rad-showcase rad-showcase--index rad-animation-group rad-fade-down">
+  <div>
+    {{- $contextType := printf "%T" . -}}
+    {{- $isShortcode := eq $contextType "*hugolib.ShortcodeWithPage" -}}
+    {{- $inner := .Scratch.Get "Inner" -}}
+    {{- $showcaseTitle := "" -}}
+    {{- $showcaseSubtitle := "" -}}
+    {{- $showcaseDescription := "" -}}
+    {{- $buttonURL := "" -}}
+    {{- $buttonIcon := "" -}}
+    {{- $buttonText := "" -}}
+    {{- $button2URL := "" -}}
+    {{- $button2Icon := "" -}}
+    {{- $button2Text := "" -}}
+    {{- $imgSrc := "" -}}
+    {{- $imgAlt := "" -}}
+    {{- $imgWidth := 0 -}}
+    {{- $imgHeight := 0 -}}
+    {{- $imgScale := 0.5 -}}
+    {{- $imgShape := "" -}}
+    {{- $socialLinks := "" -}}
+
+    {{- if $isShortcode }}
+      {{- $showcaseTitle = .Get "title" | default (i18n "showcase_title") -}}
+      {{- $showcaseSubtitle = .Get "subtitle" | default (i18n "showcase_subtitle") -}}
+      {{- $showcaseDescription = .Get "description" | default (i18n "showcase_description") | safeHTML -}}
+      {{- $buttonURL = .Get "button_url" | default hugo.Data.homepage.showcase.button.URL -}}
+      {{- $buttonIcon = .Get "button_icon" | default hugo.Data.homepage.showcase.button.icon -}}
+      {{- $buttonText = .Get "button_text" | default false -}}
+      {{- $button2URL = .Get "button2_url" | default false -}}
+      {{- $button2Icon = .Get "button2_icon" | default "icon-circle-arrow-right" -}}
+      {{- $button2Text = .Get "button2_text" | default false -}}
+      {{- $imgSrc = .Get "imgSrc" | default hugo.Data.homepage.showcase.image.src -}}
+      {{- $imgAlt = .Get "imgAlt" | default "" -}}
+      {{- $imgWidth = .Get "imgWidth" | default hugo.Data.homepage.showcase.image.width -}}
+      {{- $imgHeight = .Get "imgHeight" | default hugo.Data.homepage.showcase.image.height -}}
+      {{- $imgScale = .Get "imgScale" | default hugo.Data.homepage.showcase.image.scale -}}
+      {{- $imgShape = .Get "imgShape" | default hugo.Data.homepage.showcase.image.shape -}}
+      {{- $socialLinks = .Get "social_links" -}}
+    {{- else }}
+      {{- $showcaseTitle = i18n "showcase_title" -}}
+      {{- $showcaseSubtitle = i18n "showcase_subtitle" -}}
+      {{- $showcaseDescription = i18n "showcase_description" | safeHTML -}}
+      {{- $buttonURL = hugo.Data.homepage.showcase.button.URL -}}
+      {{- $buttonIcon = hugo.Data.homepage.showcase.button.icon -}}
+      {{- $buttonText = i18n "showcase_button" -}}
+      {{- $imgSrc = hugo.Data.homepage.showcase.image.src -}}
+      {{- $imgWidth = hugo.Data.homepage.showcase.image.width -}}
+      {{- $imgHeight = hugo.Data.homepage.showcase.image.height -}}
+      {{- $imgScale = hugo.Data.homepage.showcase.image.scale -}}
+      {{- $imgShape = hugo.Data.homepage.showcase.image.shape -}}
+      {{- $socialLinks = hugo.Data.homepage.showcase.socialLinks -}}
+    {{- end }}
+
+    {{- if and $buttonURL (not (or (hasPrefix $buttonURL "http://") (hasPrefix $buttonURL "https://") (hasPrefix $buttonURL "mailto:") (hasPrefix $buttonURL "#"))) -}}
+      {{- $buttonURL = relURL (strings.TrimPrefix "/" $buttonURL) -}}
+    {{- end -}}
+    {{- if and $button2URL (not (or (hasPrefix $button2URL "http://") (hasPrefix $button2URL "https://") (hasPrefix $button2URL "mailto:") (hasPrefix $button2URL "#"))) -}}
+      {{- $button2URL = relURL (strings.TrimPrefix "/" $button2URL) -}}
+    {{- end -}}
+
+    <div class="showcase-section row flex-column flex-md-row rad-fade-down rad-waiting rad-animate">
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+        <h1 class="display-1">{{ $showcaseTitle }}</h1>
+        <h2 class="display-5"><span>{{ $showcaseSubtitle | safeHTML }}</span></h2>
+        <div class="lead portfolio-hero-introduction">{{ $showcaseDescription }}</div>
+        {{ if or $buttonText $button2Text }}
+          <div class="portfolio-hero-actions">
+            {{ if $buttonText }}
+              <a href="{{ $buttonURL }}" class="btn btn-primary"><i class="{{ $buttonIcon }}" aria-hidden="true"></i>{{ $buttonText }}</a>
+            {{ end }}
+            {{ if $button2Text }}
+              <a href="{{ $button2URL }}" class="btn btn-frameless"><i class="{{ $button2Icon }}" aria-hidden="true"></i>{{ $button2Text }}</a>
+            {{ end }}
+          </div>
+        {{ end }}
+        {{- if or $inner $socialLinks }}
+          <nav class="portfolio-hero-social" aria-label="Professional profiles">
+            {{- if $inner }}
+              {{ $inner }}
+            {{- else }}
+              <div class="platform-links">
+                {{ range $socialLinks }}
+                  <a href="{{ .URL | absURL }}" target="_blank" rel="noopener noreferrer" aria-label="{{ .icon }}"><i class="icon-{{ .icon }}" aria-hidden="true"></i></a>
+                {{ end }}
+              </div>
+            {{- end }}
+          </nav>
+        {{- end }}
+      </div>
+      <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6 profile-image{{ if $imgShape }} profile-image--{{ $imgShape }}{{ end }}">
+        {{ partial "lazypicture" (dict "src" $imgSrc "width" $imgWidth "height" $imgHeight "scale" $imgScale "alt" $imgAlt) }}
+      </div>
+    </div>
+  </div>
+</section>

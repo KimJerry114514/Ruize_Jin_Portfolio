@@ -1,0 +1,40 @@
+<article class="post summary col-12">
+  <header>
+    <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+    <div class="post-meta">
+      <div>
+        <div class="post-meta-info">
+          <span class="published-label">{{ i18n "published_on" }}</span> 
+          <time class="date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date.Format "Mon Jan 2, 2006" }}</time> · 
+          <span class="wordcount">{{ .WordCount }} Words</span>
+        </div>
+        {{ with .GetTerms "topics" }}
+        <ul class="topics">
+          {{ range . }}
+          <li><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+          {{ end }}
+        </ul>
+        {{ end }} {{ with .GetTerms "tags" }}
+        <ul class="tags">
+          {{ range . }}
+          <li class="border"><a href="{{ .RelPermalink }}">{{ .LinkTitle }}</a></li>
+          {{ end }}
+        </ul>
+        {{ end }}
+      </div>
+    </div>
+  </header>
+  <div class="post-summary post-content">
+  {{ .Summary | safeHTML }}
+  </div>
+
+  <footer class="">
+    <div class="row">
+      <div class="col-12 col-lg-4">
+        <a class="btn btn-outline-secondary btn-sm" href="{{ .RelPermalink }}"
+          >{{ i18n "read_more" }}&nbsp;&raquo;</a
+        >
+      </div>
+    </div>
+  </footer>
+</article>

@@ -1,0 +1,88 @@
+## Meta tags
+"meta_title": ""
+## Header
+"logo_alt": ""
+"logo_text1": ""
+"logo_text2": ""
+## General
+"home": "Accueil"
+"skipToMainContent": "Aller au contenu principal"
+"toggle_navigation": "Basculer la navigation"
+## Footer
+"footer_notice": ""
+"language": "Langue"
+"toggle_theme": "Changer le thème"
+"theme_light": "☀️ Clair"
+"theme_dark": "🌑 Sombre"
+"theme_auto": "✨ Auto"
+## Color Scheme
+"color_scheme": "Palette de couleurs"
+## Search
+"search_tags_label": "Tags"
+"search_categories_label": "Catégories"
+"search_filter_by_tag": "Filtrer les résultats de recherche par tag"
+"search_filter_by_category": "Filtrer les résultats de recherche par catégorie"
+"search_title": "Rechercher sur le site"
+"search_placeholder": "Tapez pour rechercher..."
+"search_results_heading": "Pages correspondantes"
+"search_min_chars": "Veuillez saisir au moins 2 caractères pour rechercher"
+"search_no_matches": "Aucun résultat trouvé"
+"search_loading": "Chargement..."
+"search_error_generic": "Un problème est survenu avec la recherche. Veuillez réessayer plus tard."
+"search_untitled": "Sans titre"
+"search_no_preview": "Aucun aperçu disponible"
+## Homepage head title
+"head_title": ""
+"head_description": ""
+## Blog
+"read_more": "Lire la suite"
+"published_on": "Publié le "
+"continue_reading": "Continuer à lire"
+## Blog Stats (for list-cards layout)
+"blog_stats_posts": "Articles"
+"blog_stats_last_updated": "Dernière mise à jour"
+"blog_stats_first_post": "Premier article"
+"blog_stats_topics": "Sujets"
+"blog_stats_latest_post": "Dernier article"
+## 404 Page
+"404_title": "Page non trouvée"
+"404_description": "Désolé, mais la page que vous recherchez est introuvable."
+"404_button": "Retour à l'accueil"
+## Related Posts
+"related_posts": "Articles connexes"
+## Social Sharing
+"share_this_post": "Partager cet article"
+"share_on_twitter": "Partager sur Twitter"
+"share_on_linkedin": "Partager sur LinkedIn"
+"share_on_facebook": "Partager sur Facebook"
+"share_via_email": "Partager par email"
+"share_twitter_label": "Twitter"
+"share_linkedin_label": "LinkedIn"
+"share_facebook_label": "Facebook"
+"share_email_label": "Email"
+"share_on_bluesky": "Partager sur Bluesky"
+"share_bluesky_label": "Bluesky"
+"share_on_mastodon": "Partager sur Mastodon"
+"share_mastodon_label": "Mastodon"
+## Table of Contents
+"table_of_contents": "Table des matières"
+## Comments
+"comments": "Commentaires"
+## Reading time and metadata
+"min_read": "min de lecture"
+"last_updated": "Mis à jour"
+## Taxonomy
+"categories": "Catégories"
+"post_singular": "article"
+"post_plural": "articles"
+"tags": "Étiquettes"
+"authors": "Auteurs"
+"series": "Séries"
+"author_posts": "Articles de cet auteur"
+"series_posts": "Articles de la série"
+"series_part": "Partie"
+"recent_posts": "Articles récents"
+"popular_tags": "Tags populaires"
+"view_all_tags": "Voir tous les tags"
+"primary_navigation": "Navigation principale"
+"footer_navigation": "Navigation du pied de page"

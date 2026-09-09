@@ -1,0 +1,10 @@
+{
+  "devDependencies": {
+    "bootstrap": "^5.3.8",
+    "bootstrap-print-css": "^1.0.1",
+    "autoprefixer": "^10.5.4",
+    "postcss": "^8.5.26",
+    "postcss-cli": "^11.0.0",
+    "@zetxek/adritian-theme-helper": "^1.0.5"
+  }
+}

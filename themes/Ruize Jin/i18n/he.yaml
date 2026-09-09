@@ -1,0 +1,126 @@
+## Meta tags
+"meta_title": ""
+## Header
+"logo_alt": ""
+"logo_text1": ""
+"logo_text2": ""
+## General
+"home": "בית"
+"skipToMainContent": "דלג לתוכן הראשי"
+"toggle_navigation": "החלף ניווט"
+## Footer
+"footer_notice": ""
+"language": "שפה"
+"toggle_theme": "החלף ערכת נושא"
+"theme_light": "☀️ בהיר"
+"theme_dark": "🌑 כהה"
+"theme_auto": "✨ אוטומטי"
+## Homepage head title
+"head_title": ""
+"head_description": ""
+## Homepage showcase
+"showcase_title": ""
+"showcase_subtitle": ""
+"showcase_description": ""
+"showcase_button": "צור קשר"
+## Homepage about
+"about_title": "מי אני?"
+"about_content": ""
+"about_button": "אודותיי"
+## Homepage education
+"education_title": "השכלה"
+## Homepage experience
+"experience_button": "לינקדאין"
+"experience_button_url": ""
+"experience_button2": "הורד קורות חיים"
+"experience_button2_url": ""
+"experience_button3": "הצג הכל"
+"experience_button3_url": "/experience"
+## Homepage client & work
+"client_work_title": "לקוחות ועבודות"
+## Homepage newsletter
+"newsletter_title": "ניוזלטר"
+"newsletter_button": "הירשם"
+"newsletter_placeholder": "האימייל שלך"
+"newsletter_success_message": "תודה שנרשמת לניוזלטר שלי!"
+"newsletter_error_message": "אירעה שגיאה. אנא נסה שוב."
+"newsletter_note": "לעולם לא נשתף את האימייל שלך עם אף אחד אחר."
+## Homepage testimonials
+"testimonials_title": "המלצות"
+## Homepage contact
+"contact_title": "צור קשר"
+"contact_button": "שלח הודעה"
+"contact_form_name": "שם מלא"
+"contact_form_email": "כתובת אימייל"
+"contact_form_message": "הקלד את ההודעה שלך כאן"
+"contact_phone_title": "מספר טלפון"
+"contact_email_title": "אימייל"
+"contact_address_title": "כתובת"
+## Blog
+"read_more": "קרא עוד"
+"published_on": "פורסם ב-"
+"continue_reading": "המשך לקרוא"
+## Blog Stats (for list-cards layout)
+"blog_stats_posts": "פוסטים"
+"blog_stats_last_updated": "עודכן לאחרונה"
+"blog_stats_first_post": "פוסט ראשון"
+"blog_stats_topics": "נושאים"
+"blog_stats_latest_post": "פוסט אחרון"
+## 404 Page
+"404_title": "הדף לא נמצא"
+"404_description": "מצטערים, אך הדף שחיפשת לא נמצא."
+"404_button": "חזרה לדף הבית"
+## Related Posts
+"related_posts": "פוסטים קשורים"
+## Social Sharing
+"share_this_post": "שתף פוסט זה"
+"share_on_twitter": "שתף בטוויטר"
+"share_on_linkedin": "שתף בלינקדאין"
+"share_on_facebook": "שתף בפייסבוק"
+"share_via_email": "שתף באימייל"
+"share_twitter_label": "טוויטר"
+"share_linkedin_label": "לינקדאין"
+"share_facebook_label": "פייסבוק"
+"share_email_label": "אימייל"
+"share_on_bluesky": "שתף בבלוסקיי"
+"share_bluesky_label": "בלוסקיי"
+"share_on_mastodon": "שתף במסטודון"
+"share_mastodon_label": "מסטודון"
+## Table of Contents
+"table_of_contents": "תוכן העניינים"
+## Comments
+"comments": "תגובות"
+## Reading time and metadata
+"min_read": "דקות קריאה"
+"last_updated": "עודכן"
+## Taxonomy
+"categories": "קטגוריות"
+"post_singular": "פוסט"
+"post_plural": "פוסטים"
+"tags": "תגיות"
+"authors": "מחברים"
+"series": "סדרות"
+"author_posts": "פוסטים מאת מחבר זה"
+"series_posts": "פוסטים בסדרה"
+"series_part": "חלק"
+"recent_posts": "פוסטים אחרונים"
+"popular_tags": "תגיות פופולריות"
+"view_all_tags": "צפה בכל התגיות"
+## Color Scheme
+"color_scheme": "ערכת צבעים"
+## Search
+"search_tags_label": "תגיות"
+"search_categories_label": "קטגוריות"
+"search_filter_by_tag": "סנן תוצאות חיפוש לפי תגית"
+"search_filter_by_category": "סנן תוצאות חיפוש לפי קטגוריה"
+"search_title": "חפש באתר"
+"search_placeholder": "הקלד כדי לחפש..."
+"search_results_heading": "דפים תואמים"
+"search_min_chars": "נא להזין לפחות 2 תווים לחיפוש"
+"search_no_matches": "לא נמצאו תוצאות"
+"search_loading": "טוען..."
+"search_error_generic": "אירעה בעיה בחיפוש. נסה שוב מאוחר יותר."
+"search_untitled": "ללא כותרת"
+"search_no_preview": "אין תצוגה מקדימה"
+"primary_navigation": "ניווט ראשי"
+"footer_navigation": "ניווט תחתון"

@@ -1,0 +1,41 @@
+{{- /* Breadcrumbs are built from Page.Ancestors (Page objects -> .RelPermalink),
+     so section `url` front matter, multilingual sites and baseURL subpaths are
+     respected by construction. Never reconstruct URLs from path segments. */ -}}
+{{- $breadcrumb_disabled := or (eq .Type "landing") (eq .Type "demo") (eq .Type "cv") -}}
+{{- if .Params.hideBreadcrumb -}}
+    {{- $breadcrumb_disabled = true -}}
+{{- end -}}
+{{- if not $breadcrumb_disabled -}}
+<section id="breadcrumb-bar" class="breadcrumb-bar container">
+    <nav aria-label="breadcrumb" class="d-print-none">
+        <ol class="breadcrumbs">
+            {{- if .Site.Home -}}
+            <li class="breadcrumb-item">
+                <a href="{{ .Site.Home.RelPermalink }}" class="breadcrumb-link">
+                    <span class="breadcrumb-icon" aria-hidden="true">🏠</span>
+                    <span class="breadcrumb-text">{{ i18n "home" | default "Home" }}</span>
+                </a>
+            </li>
+            {{- end -}}
+            {{- range .Ancestors.Reverse -}}
+            {{- if not .IsHome -}}
+            <li class="breadcrumb-item">
+                <a href="{{ .RelPermalink }}" class="breadcrumb-link">
+                    <span class="breadcrumb-text">{{ partial "breadcrumb-label.html" . }}</span>
+                </a>
+            </li>
+            {{- end -}}
+            {{- end -}}
+            <li class="breadcrumb-item active" aria-current="page">
+                {{- if .Params.LastSegmentURL -}}
+                <a href="{{ .Params.LastSegmentURL }}" class="breadcrumb-link">
+                    <span class="breadcrumb-text">{{ partial "breadcrumb-label.html" . }}</span>
+                </a>
+                {{- else -}}
+                <span class="breadcrumb-text">{{ partial "breadcrumb-label.html" . }}</span>
+                {{- end -}}
+            </li>
+        </ol>
+    </nav>
+</section>
+{{- end -}}

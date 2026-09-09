@@ -1,0 +1,241 @@
+{{ define "main" }}
+{{ $github := "https://github.com/KimJerry114514/Pure-Premium-Prediction-with-Multi-Learning-Neural-Additive-Model.git" }}
+{{ $thesis := "research/insurance-pricing/Ruize-Jin-Undergraduate-Thesis-English.docx" | relURL }}
+{{ $slides := "research/insurance-pricing/Ruize-Jin-Thesis-Defense-English.pptx" | relURL }}
+<article id="main-content" class="insurance-case-study">
+  <header class="insurance-case-study__hero">
+    <p class="insurance-case-study__eyebrow">Insurance · Interpretable machine learning</p>
+    <h1>{{ .Title }}</h1>
+    <p class="insurance-case-study__hook">Can an insurance pricing model improve predictive accuracy without becoming a black box?</p>
+    <p class="insurance-case-study__technology">Python · R · PyTorch · Multi-Task Learning · Neural Additive Models · SHAP</p>
+    <nav class="insurance-case-study__actions" aria-label="Insurance research materials">
+      <a href="{{ $github }}">View GitHub <span aria-hidden="true">→</span></a>
+      <a href="{{ $thesis }}">Download English Thesis <span aria-hidden="true">→</span></a>
+      <a href="{{ $slides }}">Download Defense Slides <span aria-hidden="true">→</span></a>
+    </nav>
+  </header>
+
+  <section class="insurance-case-study__section insurance-case-study__section--introduction" aria-labelledby="insurance-introduction">
+    <div class="insurance-case-study__prose">
+      <h2 id="insurance-introduction" class="visually-hidden">Introduction</h2>
+      <p>Motor insurance pricing sits at an uncomfortable intersection. Traditional actuarial models such as generalized linear models are transparent and easy to audit, but their linear structure can struggle with nonlinear risk relationships. More flexible machine-learning models can capture those relationships, but often at the cost of interpretability.</p>
+      <p>My undergraduate thesis explored whether those two goals have to be in conflict.</p>
+      <p>I developed a Multi-Task Neural Additive Model (MTL-NAM) that jointly models claim frequency and claim severity while preserving an additive, feature-level structure. The goal was not simply to improve predictive performance, but to build a model whose learned risk effects could still be inspected and explained.</p>
+      <aside class="insurance-case-study__question" aria-label="Research question">
+        <strong>Research question:</strong>
+        <p>Can shared learning across frequency and severity improve insurance pricing without turning the model into a black box?</p>
+      </aside>
+    </div>
+  </section>
+
+  <section class="insurance-case-study__section" aria-labelledby="pricing-problem">
+    <div class="insurance-case-study__prose">
+      <h2 id="pricing-problem">The Pricing Problem</h2>
+      <p>Pure premium is commonly decomposed into two components:</p>
+      <p class="insurance-case-study__equation">Expected claim cost = Claim Frequency × Claim Severity</p>
+      <p>Claim frequency describes how often losses occur. Claim severity describes how large those losses are when they occur.</p>
+      <p>The two tasks are related, but they are not identical. A variable that strongly affects whether a claim occurs may have a different effect on the size of that claim. Modeling them completely independently can miss shared information, while collapsing them into a single opaque predictor can make the result harder to interpret.</p>
+      <p>The project therefore asks whether the two components can share information during training while retaining task-specific outputs and feature-level explanations.</p>
+    </div>
+  </section>
+
+  <section class="insurance-case-study__section" aria-labelledby="why-mtl-nam">
+    <div class="insurance-case-study__prose">
+      <h2 id="why-mtl-nam">Why MTL-NAM?</h2>
+      <p>A Neural Additive Model (NAM) keeps the additive logic of a traditional interpretable model, but replaces each linear feature term with a small neural subnetwork. Each subnetwork learns a nonlinear shape function for one feature.</p>
+      <p>A Multi-Task Learning (MTL) framework trains related prediction tasks jointly so they can share useful representations.</p>
+      <p>MTL-NAM combines these ideas:</p>
+      <ul>
+        <li>each feature has its own learnable nonlinear subnetwork;</li>
+        <li>feature subnetworks are shared across claim-frequency and claim-severity tasks;</li>
+        <li>task-specific weights and output heads allow the same feature to matter differently for each task;</li>
+        <li>the additive structure keeps feature effects directly inspectable.</li>
+      </ul>
+    </div>
+    {{ with resources.Get "images/projects/insurance-pricing/mtl-nam-architecture.png" }}
+      <figure class="insurance-case-study__figure insurance-case-study__figure--architecture">
+        <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="MTL-NAM architecture with shared feature subnetworks and separate frequency and severity outputs" loading="lazy" decoding="async">
+        <figcaption>Shared feature subnetworks allow related insurance tasks to learn jointly while preserving task-specific outputs.</figcaption>
+      </figure>
+    {{ end }}
+  </section>
+
+  <section class="insurance-case-study__section" aria-labelledby="data-design">
+    <div class="insurance-case-study__prose">
+      <h2 id="data-design">Data and Experimental Design</h2>
+      <p>The study uses the public freMTPL French motor third-party liability dataset, which contains policy characteristics, exposure, claim counts, and claim amounts.</p>
+      <p>The empirical workflow was:</p>
+      <ol>
+        <li>prepare policy-level frequency and severity targets;</li>
+        <li>apply a common preprocessing framework;</li>
+        <li>compare four modeling approaches:
+          <ul>
+            <li>GLM</li>
+            <li>GBM</li>
+            <li>single-task NAM</li>
+            <li>MTL-NAM</li>
+          </ul>
+        </li>
+        <li>evaluate out of sample using six-fold cross-validation;</li>
+        <li>compare predictive performance using negative log-likelihood (NLL), RMSE, and MAE;</li>
+        <li>inspect shape functions and SHAP-based feature importance for interpretability.</li>
+      </ol>
+      <p>The dataset presents a challenging prediction problem. Claim frequency is strongly concentrated near zero, while claim severity is highly skewed and heavy-tailed. Most predictors also show weak linear correlations with the response variables, suggesting that important structure may be nonlinear.</p>
+    </div>
+    {{ with resources.Get "images/projects/insurance-pricing/figure-2-exploratory-analysis-english.png" }}
+      <figure class="insurance-case-study__figure">
+        <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="English exploratory analysis comparing claim-frequency and claim-severity distributions" loading="lazy" decoding="async">
+        <figcaption>Claim frequency is strongly zero-inflated, while claim severity is highly skewed and heavy-tailed.</figcaption>
+      </figure>
+    {{ end }}
+  </section>
+
+  <section class="insurance-case-study__section" aria-labelledby="predictive-performance">
+    <div class="insurance-case-study__prose">
+      <h2 id="predictive-performance">Predictive Performance</h2>
+      <p>Within the evaluation framework reported in the thesis, MTL-NAM produced the best values across the listed frequency and severity metrics.</p>
+    </div>
+    <div class="insurance-case-study__results" aria-label="Predictive performance comparison">
+      <section class="insurance-case-study__result-group" aria-labelledby="frequency-results">
+        <h3 id="frequency-results">Claim Frequency</h3>
+        <div class="insurance-case-study__table" tabindex="0" role="region" aria-label="Scrollable claim frequency results table">
+          <table>
+            <thead><tr><th scope="col">Model</th><th scope="col">NLL</th><th scope="col">RMSE</th><th scope="col">MAE</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">GLM</th><td>0.243</td><td>2.018</td><td>0.190</td></tr>
+              <tr><th scope="row">GBM</th><td>0.239</td><td>2.017</td><td>0.190</td></tr>
+              <tr><th scope="row">NAM</th><td>0.156</td><td>2.018</td><td>0.189</td></tr>
+              <tr class="insurance-case-study__best-result"><th scope="row">MTL-NAM</th><td>0.155</td><td>1.998</td><td>0.187</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <section class="insurance-case-study__result-group" aria-labelledby="severity-results">
+        <h3 id="severity-results">Claim Severity</h3>
+        <div class="insurance-case-study__table" tabindex="0" role="region" aria-label="Scrollable claim severity results table">
+          <table>
+            <thead><tr><th scope="col">Model</th><th scope="col">NLL</th><th scope="col">RMSE</th><th scope="col">MAE</th></tr></thead>
+            <tbody>
+              <tr><th scope="row">GLM</th><td>1.708</td><td>21387.021</td><td>2228.850</td></tr>
+              <tr><th scope="row">GBM</th><td>2.759</td><td>21369.402</td><td>1708.529</td></tr>
+              <tr><th scope="row">NAM</th><td>1.620</td><td>21320.620</td><td>2219.412</td></tr>
+              <tr class="insurance-case-study__best-result"><th scope="row">MTL-NAM</th><td>1.605</td><td>21003.867</td><td>1634.039</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </div>
+    <div class="insurance-case-study__prose insurance-case-study__prose--after-data">
+      <p>The most useful comparison for the research question is not only MTL-NAM versus GLM or GBM, but MTL-NAM versus single-task NAM. Because both preserve an additive interpretable structure, the comparison helps isolate the value of multi-task sharing. In the reported experiments, the multi-task model improves on the single-task NAM across the listed metrics for both tasks.</p>
+      <p>These results should be interpreted within this experimental framework rather than as evidence that MTL-NAM will dominate every alternative dataset or insurance pricing system.</p>
+    </div>
+  </section>
+
+  <section class="insurance-case-study__section" aria-labelledby="model-learning">
+    <div class="insurance-case-study__prose">
+      <h2 id="model-learning">What Did the Model Learn?</h2>
+      <h3>Claim Frequency</h3>
+    </div>
+    {{ with resources.Get "images/projects/insurance-pricing/claim-frequency-shape-functions.png" }}
+      <figure class="insurance-case-study__figure insurance-case-study__figure--wide">
+        <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="MTL-NAM claim-frequency shape functions for nine policy and driver features" loading="lazy" decoding="async">
+      </figure>
+    {{ end }}
+    <div class="insurance-case-study__prose insurance-case-study__prose--after-figure">
+      <p>The frequency shape functions reveal pronounced nonlinear and piecewise patterns.</p>
+      <ul>
+        <li>BonusMalus rises sharply at lower values, reaches a peak, and then declines.</li>
+        <li>Density shows a broadly increasing relationship with claim frequency.</li>
+        <li>Driver age shows substantially higher risk for the youngest group, lower effects for middle-age groups, and a small increase for the oldest group.</li>
+        <li>Vehicle and regional variables show smaller but non-negligible category-level differences.</li>
+      </ul>
+      <p>These patterns illustrate why a purely linear specification may be restrictive: several important relationships are neither linear nor strictly monotonic.</p>
+      <h3>Claim Severity</h3>
+    </div>
+    {{ with resources.Get "images/projects/insurance-pricing/claim-severity-shape-functions.png" }}
+      <figure class="insurance-case-study__figure insurance-case-study__figure--wide">
+        <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="MTL-NAM claim-severity shape functions for nine policy and driver features" loading="lazy" decoding="async">
+      </figure>
+    {{ end }}
+    <div class="insurance-case-study__prose insurance-case-study__prose--after-figure">
+      <p>The same variables do not necessarily behave the same way for severity.</p>
+      <ul>
+        <li>young-driver effects are substantially larger;</li>
+        <li>regional differences become more pronounced;</li>
+        <li>vehicle power and vehicle brand show stronger piecewise heterogeneity;</li>
+        <li>BonusMalus and Density retain nonlinear effects but with different magnitudes.</li>
+      </ul>
+      <p>Frequency and severity therefore share risk information, but the same feature can carry different importance or effect magnitude in each task.</p>
+    </div>
+  </section>
+
+  <section class="insurance-case-study__section" aria-labelledby="feature-importance">
+    <div class="insurance-case-study__prose">
+      <h2 id="feature-importance">Feature Importance Across the Two Tasks</h2>
+    </div>
+    <div class="insurance-case-study__figure-pair">
+      {{ with resources.Get "images/projects/insurance-pricing/claim-frequency-shap-importance.png" }}
+        <figure class="insurance-case-study__figure">
+          <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="SHAP feature-importance ranking for claim frequency" loading="lazy" decoding="async">
+          <figcaption>Claim-frequency SHAP importance.</figcaption>
+        </figure>
+      {{ end }}
+      {{ with resources.Get "images/projects/insurance-pricing/claim-severity-shap-importance.png" }}
+        <figure class="insurance-case-study__figure">
+          <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="SHAP feature-importance ranking for claim severity" loading="lazy" decoding="async">
+          <figcaption>Claim-severity SHAP importance.</figcaption>
+        </figure>
+      {{ end }}
+    </div>
+    <div class="insurance-case-study__prose insurance-case-study__prose--after-figure">
+      <p>SHAP analysis provides a second view of the model's explanations.</p>
+      <p>For claim frequency, BonusMalus is the dominant feature, with Density also playing a substantial role.</p>
+      <p>For claim severity, Region and VehPower become more important, followed by BonusMalus and Density.</p>
+      <p>The two tasks therefore respond to overlapping but differently weighted risk factors. This is the central intuition behind the multi-task design: share information where the tasks are related, but retain task-specific flexibility where their risk mechanisms differ.</p>
+    </div>
+  </section>
+
+  <section class="insurance-case-study__section" aria-labelledby="my-contribution">
+    <div class="insurance-case-study__prose">
+      <h2 id="my-contribution">My Contribution</h2>
+      <p>This project brought together actuarial modeling and interpretable machine learning in one research workflow.</p>
+      <p>My work included:</p>
+      <ul>
+        <li>formulating pure-premium prediction as related frequency and severity tasks;</li>
+        <li>implementing single-task NAM and multi-task MTL-NAM models in PyTorch;</li>
+        <li>comparing the proposed model with GLM and GBM baselines;</li>
+        <li>constructing a six-fold out-of-sample evaluation workflow;</li>
+        <li>generating feature-level shape functions;</li>
+        <li>applying SHAP-based interpretability analysis;</li>
+        <li>translating model behavior into actuarial risk interpretations;</li>
+        <li>documenting the work in an undergraduate thesis and thesis-defense presentation.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="insurance-case-study__section" aria-labelledby="limitations">
+    <div class="insurance-case-study__prose">
+      <h2 id="limitations">Limitations</h2>
+      <h3>No explicit higher-order feature interactions</h3>
+      <p>The current additive structure focuses primarily on main effects, so higher-order interaction effects are not modeled directly.</p>
+      <h3>No explicit business-shape constraints</h3>
+      <p>The current model does not impose monotonicity or other actuarial priors, so learned effects can deviate from business expectations.</p>
+      <h3>Single public insurance dataset</h3>
+      <p>The evidence comes from the freMTPL experimental setting and does not establish generalization to other insurance markets, products, or underwriting environments.</p>
+      <p>Natural extensions include interaction-aware additive models, monotonicity and smoothness constraints, and evaluation on additional insurance portfolios.</p>
+    </div>
+  </section>
+
+  <section class="insurance-case-study__section" aria-labelledby="research-materials">
+    <div class="insurance-case-study__prose">
+      <h2 id="research-materials">Research Materials</h2>
+      <nav class="insurance-case-study__materials" aria-label="Download research materials">
+        <a href="{{ $github }}">View GitHub <span aria-hidden="true">→</span></a>
+        <a href="{{ $thesis }}">Download English Thesis <span aria-hidden="true">→</span></a>
+        <a href="{{ $slides }}">Download Defense Slides <span aria-hidden="true">→</span></a>
+      </nav>
+    </div>
+  </section>
+
+</article>
+{{ end }}

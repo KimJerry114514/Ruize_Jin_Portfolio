@@ -1,0 +1,34 @@
+Thumbs.db
+.DS_Store
+.dist
+.tmp
+.sass-cache
+npm-debug.log
+node_modules
+builds
+ 
+# Playwright
+/test-results/
+/tests/coverage-report
+playwright-report
+test-results
+exampleSite/public/
+exampleSite/resources/
+exampleSite/.hugo_build.lock
+exampleSite/hugo_stats.json
+
+# Local builds
+.hugo_build.lock
+public/
+resources/_gen/
+
+# idea
+.idea/
+*.tar.gz
+public_test/
+.playwright-mcp/
+.claude/
+navbar-*.png
+
+# Color scheme capture raw outputs (composites are committed)
+exampleSite/static/img/blog/raw/

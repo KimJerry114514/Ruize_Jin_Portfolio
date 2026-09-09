@@ -1,0 +1,80 @@
+{{ define "main" }}
+<main id="main-content" class="portfolio-page portfolio-life-page">
+  <div class="container">
+    <header class="portfolio-page-header portfolio-page-header--narrow">
+      <p class="portfolio-eyebrow">Away from the screen</p>
+      <h1>{{ .Title }}</h1>
+      <div class="lead">{{ .Content }}</div>
+    </header>
+
+    <div class="portfolio-life-list">
+      <section id="cooking" class="portfolio-life-item">
+        <div class="row g-4 align-items-center">
+          <div class="col-12 col-lg-5">
+            <p class="portfolio-life-index">01</p>
+            <h2>Cooking</h2>
+            <p>Recipes, regions, and the food I make.</p>
+            <p class="portfolio-life-note">My Kitchen Atlas</p>
+            <a class="portfolio-section-link" href="{{ "life/cooking/" | relURL }}">Explore Cooking <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="col-12 col-lg-7">
+            <a class="portfolio-life-cover-link" href="{{ "life/cooking/" | relURL }}" aria-label="Explore Cooking">
+              <figure class="portfolio-life-cover">
+                {{ partial "responsive-image.html" (dict
+                  "src" "images/life/cook-profile.png"
+                  "alt" "Cooking"
+                  "class" "portfolio-life-cover__image"
+                  "sizes" "(min-width: 992px) 58vw, 100vw"
+                ) }}
+              </figure>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <section id="birdwatching" class="portfolio-life-item">
+        <div class="row g-4 align-items-center">
+          <div class="col-12 col-lg-5 order-lg-2">
+            <p class="portfolio-life-index">02</p>
+            <h2>Birdwatching</h2>
+            <p>Small observations from the world around me.</p>
+          </div>
+          <div class="col-12 col-lg-7 order-lg-1">
+            <figure class="portfolio-life-cover">
+              {{ partial "responsive-image.html" (dict
+                "src" "images/life/bird-watching profile.JPG"
+                "alt" "Birdwatching"
+                "class" "portfolio-life-cover__image"
+                "sizes" "(min-width: 992px) 58vw, 100vw"
+              ) }}
+            </figure>
+          </div>
+        </div>
+      </section>
+
+      <section id="standup-comedy" class="portfolio-life-item">
+        <div class="row g-4 align-items-center">
+          <div class="col-12 col-lg-5">
+            <p class="portfolio-life-index">03</p>
+            <h2>Stand-up Comedy</h2>
+            <p>A few stories from my time on stage.</p>
+            <a class="portfolio-section-link" href="{{ "life/standup/" | relURL }}">Explore Stand-up <span aria-hidden="true">→</span></a>
+          </div>
+          <div class="col-12 col-lg-7">
+            <a class="portfolio-life-cover-link" href="{{ "life/standup/" | relURL }}" aria-label="Explore Stand-up Comedy">
+              <figure class="portfolio-life-cover">
+                {{ partial "responsive-image.html" (dict
+                  "src" "images/life/standup-profile.png"
+                  "alt" "Stand-up Comedy"
+                  "class" "portfolio-life-cover__image"
+                  "sizes" "(min-width: 992px) 58vw, 100vw"
+                ) }}
+              </figure>
+            </a>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</main>
+{{ end }}

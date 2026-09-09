@@ -1,0 +1,78 @@
+{{/* Project-level override of Adritian's homepage client-and-work partial.
+     It removes the client-logo strip, orders projects by weight, and allows
+     project images and buttons to be omitted. */}}
+
+{{- $contextType := printf "%T" . -}}
+{{- $isShortcode := eq $contextType "*hugolib.ShortcodeWithPage" -}}
+
+{{- $sectionTitle := "" -}}
+{{- if $isShortcode -}}
+  {{- $sectionTitle = .Get "title" -}}
+{{- else -}}
+  {{- $sectionTitle = i18n "client_work_title" -}}
+{{- end -}}
+
+{{- $projects := sort (where .Site.RegularPages "Type" "projects") "Weight" "asc" -}}
+
+{{- $sectionId := "client-and-work-section" -}}
+{{- if $isShortcode -}}
+  {{- with .Get "sectionId" -}}
+    {{- $sectionId = . -}}
+  {{- end -}}
+{{- end -}}
+
+<section id="{{ $sectionId }}" class="section section--border-bottom">
+  <div class="client-works-container">
+    <h2 class="rad-animation-group rad-fade-down">{{ $sectionTitle }}</h2>
+
+    {{ range $index, $project := $projects }}
+      {{- $isEven := eq (mod $index 2) 0 -}}
+      {{- $imageSrc := "" -}}
+      {{- $imageScale := 1 -}}
+      {{- with $project.Params.image -}}
+        {{- with .src -}}{{- $imageSrc = . -}}{{- end -}}
+        {{- with .scale -}}{{- $imageScale = . -}}{{- end -}}
+      {{- end -}}
+      {{- $hasImage := ne $imageSrc "" -}}
+      {{- $metadata := slice -}}
+      {{- with $project.Params.projectType -}}{{- $metadata = $metadata | append . -}}{{- end -}}
+      {{- with $project.Params.context -}}{{- $metadata = $metadata | append . -}}{{- end -}}
+      {{- with $project.Params.dates -}}{{- $metadata = $metadata | append . -}}{{- end -}}
+
+      <div class="row row--padded rad-animation-group rad-fade-down{{ if and $hasImage $isEven }} flex-column-reverse flex-md-row even-row{{ else if $hasImage }} uneven-row{{ end }}">
+        {{ if and $hasImage (not $isEven) }}
+          <div class="col-12 col-md-7 pl-md-0 text-right not-even">
+            {{ partial "lazypicture" (dict "src" $imageSrc "scale" $imageScale "class" "picture-works odd") }}
+          </div>
+        {{ end }}
+
+        <div class="{{ if $hasImage }}col-12 col-md-5 mt-4 mt-md-0 my-md-auto{{ else }}col-12 col-lg-10{{ end }}">
+          {{ with $metadata }}
+            <p class="text-muted mb-2"><small>{{ delimit . " · " }}</small></p>
+          {{ end }}
+          <h3>{{ $project.Params.title }}</h3>
+          <div class="lead">{{ $project.Content }}</div>
+          {{ with $project.Params.proof }}
+            <p class="h4 mt-3 mb-2">{{ . }}</p>
+          {{ end }}
+          {{ with $project.Params.technologies }}
+            <p class="text-muted mb-0"><small>{{ . }}</small></p>
+          {{ end }}
+          {{ with $project.Params.button }}
+            {{ if and .URL .btnText }}
+              <a href="{{ .URL | absURL }}" class="btn btn-primary mt-3">
+                {{ .btnText }}{{ with .icon }}<i class="{{ . }}"></i>{{ end }}
+              </a>
+            {{ end }}
+          {{ end }}
+        </div>
+
+        {{ if and $hasImage $isEven }}
+          <div class="col-12 col-md-7 pl-md-0 text-right">
+            {{ partial "lazypicture" (dict "src" $imageSrc "scale" $imageScale "class" "picture-works even") }}
+          </div>
+        {{ end }}
+      </div>
+    {{ end }}
+  </div>
+</section>

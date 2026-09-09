@@ -1,0 +1,47 @@
+<!-- Optimized lazy loading initialization -->
+<script>
+  window.addEventListener("load", function() {
+    if (typeof lozad !== 'undefined') {
+      try {
+        var observer = window.lozad(".lozad", {
+          rootMargin: window.innerHeight / 2 + "px 0px",
+          threshold: 0.01,
+          loaded: function(el) {
+            el.setAttribute('data-loaded', 'true');
+          }
+        });
+        observer.observe();
+      } catch(e) {
+        console.error('Lozad initialization error:', e);
+      }
+    }
+  });
+</script>
+
+<!-- Non-critical scripts loaded with defer for better performance -->
+<script defer src='{{ "js/rad-animations.js" | absURL }}'></script>
+<script defer src='{{ "js/library/smooth-scroll.polyfills.min.js" | absURL }}'></script>
+<script defer src='{{ "js/sticky-header.js" | absURL }}'></script>
+<script defer src='{{ "js/smooth-scroll-init.js" | absURL }}'></script>
+<script defer src='{{ "js/copy-code.js" | absURL }}'></script>
+{{- if or .Site.Params.lightbox (not (isset .Site.Params "lightbox")) }}
+<script defer src='{{ "js/lightbox.js" | absURL }}'></script>
+{{- end }}
+
+{{- $bootstrapJs := resources.Get "js/vendor/bootstrap.bundle.min.js" | fingerprint | resources.Copy "/assets/js/vendor/bootstrap.bundle.min.js" }}
+<script defer src="{{ $bootstrapJs.RelPermalink }}"></script>
+
+
+<!-- vercel insights -->
+{{- $vercelPageInsights := .Site.Params.analytics.vercelPageInsights }}
+{{- $vercelAnalytics := .Site.Params.analytics.vercelAnalytics }}
+
+<script>
+  window.si = window.si || function () { (window.siq = window.siq || []).push(arguments); };
+</script>
+{{- if $vercelPageInsights }}
+<script defer src="/_vercel/speed-insights/script.js"></script>
+{{- end }}
+{{- if $vercelAnalytics }} 
+<script defer src="/_vercel/insights/script.js"></script>
+{{- end }}

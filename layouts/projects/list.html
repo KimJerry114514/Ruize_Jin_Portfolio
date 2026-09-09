@@ -1,0 +1,15 @@
+{{ define "main" }}
+<main id="main-content" class="portfolio-page portfolio-projects-page">
+  <header class="portfolio-page-header portfolio-projects-header">
+    <p class="portfolio-eyebrow">Selected work</p>
+    <h1>{{ .Title }}</h1>
+    <div class="lead">{{ .Content }}</div>
+  </header>
+
+  <div class="portfolio-project-list">
+    {{ range $project := .Pages.ByWeight }}
+      {{ partial "project-showcase.html" (dict "project" $project) }}
+    {{ end }}
+  </div>
+</main>
+{{ end }}

@@ -1,0 +1,126 @@
+## Meta tags
+"meta_title": ""
+## Header
+"logo_alt": ""
+"logo_text1": ""
+"logo_text2": ""
+## General
+"home": "Home"
+"skipToMainContent": "Ga naar hoofdinhoud"
+"toggle_navigation": "Navigatie in-/uitschakelen"
+## Footer
+"footer_notice": ""
+"language": "Taal"
+"toggle_theme": "Thema wijzigen"
+"theme_light": "☀️ Licht"
+"theme_dark": "🌑 Donker"
+"theme_auto": "✨ Auto"
+## Homepage head title
+"head_title": ""
+"head_description": ""
+## Homepage showcase
+"showcase_title": ""
+"showcase_subtitle": ""
+"showcase_description": ""
+"showcase_button": "Contact"
+## Homepage about
+"about_title": "Wie ben ik?"
+"about_content": ""
+"about_button": "Over mij"
+## Homepage education
+"education_title": "Opleiding"
+## Homepage experience
+"experience_button": "LinkedIn"
+"experience_button_url": ""
+"experience_button2": "CV downloaden"
+"experience_button2_url": ""
+"experience_button3": "Alles bekijken"
+"experience_button3_url": "/experience"
+## Homepage client & work
+"client_work_title": "Klanten & Werk"
+## Homepage newsletter
+"newsletter_title": "Nieuwsbrief"
+"newsletter_button": "Abonneren"
+"newsletter_placeholder": "Uw e-mail"
+"newsletter_success_message": "Bedankt voor het abonneren op mijn nieuwsbrief!"
+"newsletter_error_message": "Er is een fout opgetreden. Probeer het opnieuw."
+"newsletter_note": "We zullen uw e-mail nooit met anderen delen."
+## Homepage testimonials
+"testimonials_title": "Getuigenissen"
+## Homepage contact
+"contact_title": "Contact"
+"contact_button": "Bericht verzenden"
+"contact_form_name": "Volledige naam"
+"contact_form_email": "E-mailadres"
+"contact_form_message": "Typ hier uw bericht"
+"contact_phone_title": "Telefoonnummer"
+"contact_email_title": "E-mail"
+"contact_address_title": "Adres"
+## Blog
+"read_more": "Lees meer"
+"published_on": "Gepubliceerd op "
+"continue_reading": "Doorgaan met lezen"
+## Blog Stats (for list-cards layout)
+"blog_stats_posts": "Berichten"
+"blog_stats_last_updated": "Laatst bijgewerkt"
+"blog_stats_first_post": "Eerste bericht"
+"blog_stats_topics": "Onderwerpen"
+"blog_stats_latest_post": "Nieuwste bericht"
+## 404 Page
+"404_title": "Pagina niet gevonden"
+"404_description": "Sorry, maar de pagina die u zocht kon niet worden gevonden."
+"404_button": "Terug naar startpagina"
+## Related Posts
+"related_posts": "Gerelateerde berichten"
+## Social Sharing
+"share_this_post": "Dit bericht delen"
+"share_on_twitter": "Delen op Twitter"
+"share_on_linkedin": "Delen op LinkedIn"
+"share_on_facebook": "Delen op Facebook"
+"share_via_email": "Delen via e-mail"
+"share_twitter_label": "Twitter"
+"share_linkedin_label": "LinkedIn"
+"share_facebook_label": "Facebook"
+"share_email_label": "E-mail"
+"share_on_bluesky": "Delen op Bluesky"
+"share_bluesky_label": "Bluesky"
+"share_on_mastodon": "Delen op Mastodon"
+"share_mastodon_label": "Mastodon"
+## Table of Contents
+"table_of_contents": "Inhoudsopgave"
+## Comments
+"comments": "Reacties"
+## Reading time and metadata
+"min_read": "min. leestijd"
+"last_updated": "Bijgewerkt"
+## Taxonomy
+"categories": "Categorieën"
+"post_singular": "bericht"
+"post_plural": "berichten"
+"tags": "Tags"
+"authors": "Auteurs"
+"series": "Series"
+"author_posts": "Berichten van deze auteur"
+"series_posts": "Berichten in de serie"
+"series_part": "Deel"
+"recent_posts": "Recente berichten"
+"popular_tags": "Populaire tags"
+"view_all_tags": "Bekijk alle tags"
+## Color Scheme
+"color_scheme": "Kleurenschema"
+## Search
+"search_tags_label": "Tags"
+"search_categories_label": "Categorieën"
+"search_filter_by_tag": "Zoekresultaten filteren op tag"
+"search_filter_by_category": "Zoekresultaten filteren op categorie"
+"search_title": "Zoek op de site"
+"search_placeholder": "Typ om te zoeken..."
+"search_results_heading": "Overeenkomende pagina's"
+"search_min_chars": "Voer minstens 2 tekens in om te zoeken"
+"search_no_matches": "Geen resultaten gevonden"
+"search_loading": "Laden..."
+"search_error_generic": "Er is een probleem met de zoekfunctie opgetreden. Probeer het later opnieuw."
+"search_untitled": "Zonder titel"
+"search_no_preview": "Geen voorbeeld beschikbaar"
+"primary_navigation": "Primaire navigatie"
+"footer_navigation": "Voetnavigatie"

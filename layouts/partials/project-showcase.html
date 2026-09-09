@@ -1,0 +1,28 @@
+{{- $project := .project -}}
+{{- $isReversed := eq $project.Params.visualStyle "mobility" -}}
+{{- $summary := $project.Content -}}
+{{- if $isReversed -}}
+  {{- $summary = replaceRE `from 11\.2M NYC Yellow Taxi trips across 263 zones ` "" $summary -}}
+{{- end -}}
+
+<article class="portfolio-project-spread portfolio-project-spread--{{ $project.Params.visualStyle }}">
+  <div class="portfolio-project-spread__grid{{ if $isReversed }} portfolio-project-spread__grid--reversed{{ end }}">
+    <div class="portfolio-project-spread__text">
+      <h2 class="portfolio-project-hook">{{ $project.Params.hook }}</h2>
+      <h3 class="portfolio-project-title">{{ $project.Title }}</h3>
+      <div class="portfolio-project-summary">{{ $summary | safeHTML }}</div>
+      <div class="portfolio-project-tech" aria-label="Technologies used">
+        {{ range split $project.Params.technologies " · " }}<span>{{ . }}</span>{{ end }}
+      </div>
+      {{ with $project.Params.project_url }}
+        {{- $ctaText := $project.Params.cta_text | default "View Project" -}}
+        {{- $projectURL := relURL (strings.TrimPrefix "/" .) -}}
+        <a class="portfolio-project-cta" href="{{ $projectURL | safeURL }}" aria-label="{{ if $project.Params.cta_text }}{{ $ctaText }}: {{ $project.Title }}{{ else }}View {{ $project.Title }} project{{ end }}">{{ $ctaText }} <span aria-hidden="true">→</span></a>
+      {{ end }}
+    </div>
+
+    <figure class="portfolio-project-visual">
+      {{ partial "lazypicture" (dict "src" $project.Params.image "width" $project.Params.imageWidth "class" (printf "portfolio-project-image portfolio-project-image--%s" $project.Params.visualStyle) "alt" $project.Params.imageAlt) }}
+    </figure>
+  </div>
+</article>

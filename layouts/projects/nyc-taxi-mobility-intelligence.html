@@ -1,0 +1,244 @@
+{{ define "main" }}
+{{ $github := "https://github.com/KimJerry114514/NYC-Taxi-Mobility-Intelligence" }}
+<article id="main-content" class="nyc-taxi-project">
+  <header class="nyc-taxi-project__hero">
+    <p class="nyc-taxi-project__eyebrow">Urban mobility · Applied machine learning</p>
+    <h1>{{ .Title }}</h1>
+    <p class="nyc-taxi-project__hook">How predictable is New York City in motion?</p>
+    <p class="nyc-taxi-project__intro">An end-to-end machine-learning product for estimating NYC Yellow Taxi trip duration and pre-tip trip cost before a trip begins. The system turns a pickup location, destination, and intended departure time into a leakage-safe, zone-and-time-based prediction.</p>
+    <p class="nyc-taxi-project__technology">Python · XGBoost · FastAPI · GeoPandas · Docker · Google Cloud Run</p>
+    <nav class="nyc-taxi-project__actions" aria-label="NYC Taxi project actions">
+      <a class="nyc-taxi-project__button nyc-taxi-project__button--primary" href="#taxi-demo">Try the Model</a>
+      <a class="nyc-taxi-project__text-link" href="{{ $github }}" target="_blank" rel="noopener noreferrer">View GitHub <span aria-hidden="true">→</span></a>
+    </nav>
+  </header>
+
+  <section id="taxi-demo" class="nyc-taxi-project__section nyc-taxi-project__section--demo" aria-labelledby="taxi-demo-title">
+    <div class="nyc-taxi-project__prose">
+      <p class="nyc-taxi-project__section-label">Interactive demo</p>
+      <h2 id="taxi-demo-title">Try the Model</h2>
+      <p>Select a pickup, destination, and future departure time. The interface keeps the frozen model prediction separate from Google route context.</p>
+    </div>
+
+    <div class="nyc-taxi-project__demo" data-nyc-taxi-demo aria-busy="false">
+      <p class="nyc-taxi-project__local-note" data-local-note hidden>Local preview uses deterministic fixture data.</p>
+      <form class="nyc-taxi-project__form" data-taxi-form novalidate>
+        <div class="nyc-taxi-project__field" data-autocomplete="pickup">
+          <label for="taxi-pickup">Pickup</label>
+          <div class="nyc-taxi-project__input-wrap">
+            <input id="taxi-pickup" name="pickup" type="text" role="combobox" autocomplete="off" autocapitalize="words" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="taxi-pickup-suggestions" aria-describedby="taxi-pickup-status" placeholder="Start typing a pickup location">
+            <button class="nyc-taxi-project__clear" type="button" data-clear aria-label="Clear selected pickup" hidden>Clear</button>
+          </div>
+          <p id="taxi-pickup-status" class="nyc-taxi-project__field-status" data-field-status aria-live="polite">Type at least two characters, then select a suggestion.</p>
+          <ul id="taxi-pickup-suggestions" class="nyc-taxi-project__suggestions" data-suggestions role="listbox" aria-label="Pickup suggestions" hidden></ul>
+        </div>
+
+        <div class="nyc-taxi-project__field" data-autocomplete="dropoff">
+          <label for="taxi-dropoff">Destination</label>
+          <div class="nyc-taxi-project__input-wrap">
+            <input id="taxi-dropoff" name="dropoff" type="text" role="combobox" autocomplete="off" autocapitalize="words" spellcheck="false" aria-autocomplete="list" aria-expanded="false" aria-controls="taxi-dropoff-suggestions" aria-describedby="taxi-dropoff-status" placeholder="Start typing a destination">
+            <button class="nyc-taxi-project__clear" type="button" data-clear aria-label="Clear selected destination" hidden>Clear</button>
+          </div>
+          <p id="taxi-dropoff-status" class="nyc-taxi-project__field-status" data-field-status aria-live="polite">Type at least two characters, then select a suggestion.</p>
+          <ul id="taxi-dropoff-suggestions" class="nyc-taxi-project__suggestions" data-suggestions role="listbox" aria-label="Destination suggestions" hidden></ul>
+        </div>
+
+        <div class="nyc-taxi-project__field nyc-taxi-project__field--datetime">
+          <label for="taxi-departure">Departure date and time</label>
+          <input id="taxi-departure" name="departure" type="datetime-local" aria-describedby="taxi-departure-help" required>
+          <p id="taxi-departure-help" class="nyc-taxi-project__field-status">Choose an intended future departure time in New York.</p>
+        </div>
+
+        <div class="nyc-taxi-project__form-error" data-form-error role="alert" hidden></div>
+        <div class="nyc-taxi-project__form-actions">
+          <button class="nyc-taxi-project__button nyc-taxi-project__button--primary" type="submit" data-submit>Predict trip</button>
+          <button class="nyc-taxi-project__button nyc-taxi-project__button--secondary" type="button" data-cancel hidden>Cancel</button>
+          <span class="nyc-taxi-project__loading" data-loading role="status" aria-live="polite" hidden>Resolving locations and running the frozen model…</span>
+        </div>
+      </form>
+
+      <div class="nyc-taxi-project__results" data-results hidden>
+        <div class="nyc-taxi-project__route-summary" aria-label="Selected route">
+          <span data-result-pickup>Times Square</span>
+          <span aria-hidden="true">→</span>
+          <span data-result-dropoff>John F. Kennedy International Airport</span>
+        </div>
+        <div class="nyc-taxi-project__result-grid">
+          <section class="nyc-taxi-project__result-card nyc-taxi-project__result-card--model" aria-labelledby="taxi-model-result">
+            <p class="nyc-taxi-project__result-label">Model prediction</p>
+            <h3 id="taxi-model-result" tabindex="-1">Frozen NYC TLC model v1</h3>
+            <dl class="nyc-taxi-project__result-metrics">
+              <div><dt>Estimated Trip Duration</dt><dd data-result-duration>—</dd></div>
+              <div><dt>Empirical Duration Range</dt><dd data-result-duration-range>—</dd></div>
+              <div><dt>Estimated Pre-tip Cost</dt><dd data-result-cost>—</dd></div>
+              <div><dt>Empirical Cost Range</dt><dd data-result-cost-range>—</dd></div>
+            </dl>
+            <p class="nyc-taxi-project__result-meta" data-result-model-meta></p>
+          </section>
+
+          <section class="nyc-taxi-project__result-card nyc-taxi-project__result-card--route" aria-labelledby="taxi-route-result">
+            <p class="nyc-taxi-project__result-label">Google route context</p>
+            <h3 id="taxi-route-result">External routing reference</h3>
+            <dl class="nyc-taxi-project__result-metrics">
+              <div><dt>Route Distance</dt><dd data-result-distance>—</dd></div>
+              <div><dt>Google Route Duration</dt><dd data-result-google-duration>—</dd></div>
+            </dl>
+            <p class="nyc-taxi-project__result-meta" data-result-route-meta>Google routing is shown as external context and is not used as an input to the frozen ML model.</p>
+            <p class="nyc-taxi-project__attribution" data-route-attribution></p>
+          </section>
+        </div>
+        <button class="nyc-taxi-project__button nyc-taxi-project__button--secondary" type="button" data-reset>Reset demo</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="nyc-taxi-project__section" aria-labelledby="taxi-why-project">
+    <div class="nyc-taxi-project__prose">
+      <p class="nyc-taxi-project__section-label">Case study</p>
+      <p>Many mobility models look accurate because they use information that only becomes available after a trip is complete. I wanted to answer a more realistic question.</p>
+      <aside class="nyc-taxi-project__question">
+        <p>Before a taxi departs, can we estimate trip duration and pre-tip cost using only pickup, destination, departure time, and historical mobility structure?</p>
+      </aside>
+      <p>I used <a href="https://www.nyc.gov/site/tlc/about/tlc-trip-record-data.page" target="_blank" rel="noopener noreferrer">NYC Taxi &amp; Limousine Commission Yellow Taxi trip records</a> from January through May 2025 and rebuilt the project around this strict prediction-time constraint. Rather than treating it as a retrospective forecasting exercise, the goal was to build a model that could support a user before the trip begins.</p>
+    </div>
+  </section>
+
+  <section class="nyc-taxi-project__section" aria-labelledby="taxi-temporal-validation">
+    <div class="nyc-taxi-project__prose">
+      <p class="nyc-taxi-project__section-label">Data and validation</p>
+      <p>To evaluate the model in a realistic future setting, I used a chronological split rather than a random train/test split.</p>
+    </div>
+    <ol class="nyc-taxi-project__timeline nyc-taxi-project__timeline--three" aria-label="Chronological model evaluation">
+      <li><span>January–March 2025</span><strong>Training</strong><small>Approximately 10.9 million eligible trips</small></li>
+      <li><span>April 2025</span><strong>Validation</strong><small>Model selection</small></li>
+      <li><span>May 2025</span><strong>Locked future test</strong><small>Opened after the modeling decisions were frozen</small></li>
+    </ol>
+    <div class="nyc-taxi-project__prose nyc-taxi-project__prose--after">
+      <p>May was not used to tune the feature set, model architecture, objective, or robustness policy.</p>
+    </div>
+  </section>
+
+  <section class="nyc-taxi-project__section" aria-labelledby="taxi-feature-engineering">
+    <div class="nyc-taxi-project__prose">
+      <p class="nyc-taxi-project__section-label">Feature engineering</p>
+      <h2 id="taxi-feature-engineering">Information available before departure</h2>
+      <p>The raw NYC TLC dataset contains many highly predictive variables, including actual trip distance, drop-off time, fare components, and payment type. These variables can make a retrospective model look accurate, but they are recorded during or after the trip.</p>
+      <p>For the production model, I restricted the inputs to information available before departure. From three raw inputs, I engineered a 27-feature pre-trip representation.</p>
+    </div>
+    <div class="nyc-taxi-project__feature-boundary" aria-label="Prediction-time feature boundary">
+      <section>
+        <p>Raw inputs</p>
+        <ul>
+          <li>Pickup datetime</li>
+          <li>Pickup TLC Taxi Zone</li>
+          <li>Destination TLC Taxi Zone</li>
+        </ul>
+      </section>
+      <section>
+        <p>Not available before departure</p>
+        <ul>
+          <li>Actual trip distance</li>
+          <li>Drop-off time</li>
+          <li>Fare components</li>
+          <li>Payment type</li>
+        </ul>
+      </section>
+    </div>
+    <div class="nyc-taxi-project__contract">
+      <section>
+        <h3>Zone and geometry features</h3>
+        <ul>
+          <li>Pickup and destination zone identity</li>
+          <li>Borough and service-zone relationships</li>
+          <li>Origin–destination structure</li>
+          <li>Projected zone centroids</li>
+          <li>Centroid-based distance and travel direction</li>
+          <li>Airport and policy-related geographic indicators</li>
+        </ul>
+      </section>
+      <section>
+        <h3>Departure-time features</h3>
+        <p>Departure time is transformed into features that describe recurring mobility patterns. Cyclic encoding represents 23:00 and 00:00 as close in time rather than far apart.</p>
+      </section>
+    </div>
+    <div class="nyc-taxi-project__prose nyc-taxi-project__prose--after">
+      <p>These features capture spatial structure without using the actual distance traveled by the taxi.</p>
+    </div>
+  </section>
+
+  <section class="nyc-taxi-project__section" aria-labelledby="taxi-modeling-journey">
+    <div class="nyc-taxi-project__prose">
+      <p class="nyc-taxi-project__section-label">Modeling experiments</p>
+      <p>Before deployment, I tried MLP, spatial CNN, Attention-LSTM, and XGBoost models. These experiments explored different representations of taxi behavior, including spatial heatmaps and neural-network architectures.</p>
+      <p>After auditing the earlier experiments, I found that some results were not directly comparable because they used different feature contracts, random splits, or information that would not exist at prediction time. I therefore rebuilt model selection around the same leakage-safe pre-trip problem.</p>
+      <p>The lesson was that model selection should follow the structure of the problem rather than the complexity of the architecture.</p>
+      <div class="nyc-taxi-project__model-list" aria-label="Models explored">
+        <span>MLP</span><span>Spatial CNN</span><span>Attention-LSTM</span><span>XGBoost</span>
+      </div>
+    </div>
+    <div class="nyc-taxi-project__experiment-figures">
+      {{ with resources.Get "images/projects/nyc-taxi-mobility-intelligence/earlier-neural-network-training-curves.png" }}
+        <figure class="nyc-taxi-project__figure">
+          <p>Model training curve</p>
+          <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" alt="Loss and accuracy curves from an earlier neural-network experiment">
+          <figcaption>Training curves from an earlier neural-network experiment.</figcaption>
+        </figure>
+      {{ end }}
+      {{ with resources.Get "images/projects/nyc-taxi-mobility-intelligence/earlier-spatial-demand-heatmaps.png" }}
+        <figure class="nyc-taxi-project__figure">
+          <p>Demand heatmaps</p>
+          <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" alt="Demand heatmaps from an earlier spatial-modeling experiment">
+          <figcaption>Demand heatmaps used in the earlier spatial-modeling experiments.</figcaption>
+        </figure>
+      {{ end }}
+      {{ with resources.Get "images/projects/nyc-taxi-mobility-intelligence/earlier-model-comparison.png" }}
+        <figure class="nyc-taxi-project__figure">
+          <p>Model comparison</p>
+          <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" loading="lazy" alt="Earlier RMSE and MAE comparison between an XGBoost baseline and LSTM with attention">
+          <figcaption>Comparison from the earlier modeling experiments.</figcaption>
+        </figure>
+      {{ end }}
+    </div>
+  </section>
+
+  <section class="nyc-taxi-project__section" aria-labelledby="taxi-model-evaluation">
+    <div class="nyc-taxi-project__prose">
+      <p class="nyc-taxi-project__section-label">Model evaluation</p>
+
+      <p>I evaluated the models using:</p>
+      <ul>
+        <li>MAE</li>
+        <li>RMSE</li>
+        <li>Median absolute error</li>
+        <li>P90 absolute error</li>
+        <li>P99 absolute error</li>
+        <li>Maximum prediction</li>
+        <li>Performance on important slices such as airport trips and rare origin–destination pairs</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="nyc-taxi-project__section" aria-labelledby="taxi-deployment">
+    <div class="nyc-taxi-project__prose">
+      <p class="nyc-taxi-project__section-label">Deployment</p>
+      <p>I first froze the final XGBoost models and wrapped inference in a FastAPI service. The API converts user-selected locations into coordinates using Google Places, maps those coordinates to canonical TLC Taxi Zones, reconstructs the same 27-feature pre-trip contract used during training, and then runs the frozen models.</p>
+      <p>I containerized the service with Docker, pushed the image to Google Artifact Registry, and deployed it on Google Cloud Run. Production secrets are stored in Secret Manager, while rate limits, quotas, CORS restrictions, and bounded autoscaling protect the public service.</p>
+      <p>Google Routes is called separately for route context and is not used as a model input.</p>
+    </div>
+  </section>
+
+  <section class="nyc-taxi-project__section" aria-labelledby="taxi-conclusion">
+    <div class="nyc-taxi-project__prose">
+      <p class="nyc-taxi-project__section-label">Conclusion</p>
+      <p>The key lesson from this project was that good modeling is not only about accuracy. It is about using the right information, evaluating the model in a realistic future setting, understanding how it fails, and building something that can actually be deployed.</p>
+    </div>
+  </section>
+
+  <section class="nyc-taxi-project__section nyc-taxi-project__section--github" aria-labelledby="taxi-github">
+    <div class="nyc-taxi-project__prose">
+      <p class="nyc-taxi-project__section-label">Explore the project</p>
+      <a class="nyc-taxi-project__button nyc-taxi-project__button--primary" href="{{ $github }}" target="_blank" rel="noopener noreferrer">Explore the full project on GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</article>
+{{ end }}

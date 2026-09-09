@@ -1,0 +1,96 @@
+# Migrated from data-source/foods.docx using each table row's embedded-image relationship.
+- id: tikka-chicken-masala
+  name: "Tikka Chicken masala"
+  country: "India"
+  country_code: IN
+  image: "images/life/cooking/dishes/tikka-chicken-masala.jpeg"
+- id: longjiang-pork-rice
+  name: "隆江猪脚饭"
+  country: "China"
+  country_code: CN
+  image: "images/life/cooking/dishes/longjiang-pork-rice.jpeg"
+- id: bazirou
+  name: "把子肉"
+  country: "China"
+  country_code: CN
+  image: "images/life/cooking/dishes/bazirou.jpeg"
+- id: xi-hong-shi-chao-ji-dan
+  name: "西红柿炒鸡蛋"
+  country: "China"
+  country_code: CN
+  image: "images/life/cooking/dishes/xi-hong-shi-chao-ji-dan.jpeg"
+- id: shakshuka
+  name: "Shakshuka"
+  country: "Israel"
+  country_code: IL
+  image: "images/life/cooking/dishes/shakshuka.jpeg"
+- id: cong-shao-da-pai
+  name: "葱烧大排"
+  country: "China"
+  country_code: CN
+  image: "images/life/cooking/dishes/cong-shao-da-pai.jpeg"
+- id: hong-shao-niu-rou
+  name: "红烧牛肉"
+  country: "China"
+  country_code: CN
+  image: "images/life/cooking/dishes/hong-shao-niu-rou.jpeg"
+- id: bao-zai-fan
+  name: "煲仔饭"
+  country: "China"
+  country_code: CN
+  image: "images/life/cooking/dishes/bao-zai-fan.jpeg"
+- id: tom-yum-goong
+  name: "Tom Yum Goong"
+  country: "Thailand"
+  country_code: TH
+  image: "images/life/cooking/dishes/tom-yum-goong.jpeg"
+- id: hui-guo-rou
+  name: "回锅肉"
+  country: "China"
+  country_code: CN
+  image: "images/life/cooking/dishes/hui-guo-rou.jpeg"
+- id: american-brunch
+  name: "American brunch"
+  country: "United States"
+  country_code: US
+  image: "images/life/cooking/dishes/american-brunch.jpeg"
+- id: sha-die-niu-rou
+  name: "沙爹牛肉"
+  country: "China"
+  country_code: CN
+  image: "images/life/cooking/dishes/sha-die-niu-rou.jpeg"
+- id: korean-spicy-chicken
+  name: "Korean spicy chicken"
+  country: "South Korea"
+  country_code: KR
+  image: "images/life/cooking/dishes/korean-spicy-chicken.jpeg"
+- id: pad-kra-pao
+  name: "Pad kra pao"
+  country: "Thailand"
+  country_code: TH
+  image: "images/life/cooking/dishes/pad-kra-pao.jpeg"
+- id: gyudon
+  name: "gyudon"
+  country: "Japan"
+  country_code: JP
+  image: "images/life/cooking/dishes/gyudon.jpeg"
+- id: teriyaki-chicken
+  name: "Teriyaki Chicken"
+  country: "Japan"
+  country_code: JP
+  image: "images/life/cooking/dishes/teriyaki-chicken.jpeg"
+- id: hong-shao-rou
+  name: "红烧肉"
+  country: "China"
+  country_code: CN
+  image: "images/life/cooking/dishes/hong-shao-rou.jpeg"
+- id: goulash
+  name: "Goulash"
+  country: "Hungary"
+  country_code: HU
+  image: "images/life/cooking/dishes/goulash.jpg"
+- id: beef-rendang
+  name: "Beef Rendang"
+  country: "Indonesia"
+  country_code: ID
+  image: "images/life/cooking/dishes/beef-rendang.jpg"

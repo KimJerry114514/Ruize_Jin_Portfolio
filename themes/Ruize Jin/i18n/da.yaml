@@ -1,0 +1,126 @@
+## Meta tags
+"meta_title": ""
+## Header
+"logo_alt": ""
+"logo_text1": ""
+"logo_text2": ""
+## General
+"home": "Forside"
+"skipToMainContent": "Gå til hovedindhold"
+"toggle_navigation": "Skift navigation"
+## Footer
+"footer_notice": ""
+"language": "Sprog"
+"toggle_theme": "Skift tema"
+"theme_light": "☀️ Lys"
+"theme_dark": "🌑 Mørk"
+"theme_auto": "✨ Auto"
+## Homepage head title
+"head_title": ""
+"head_description": ""
+## Homepage showcase
+"showcase_title": ""
+"showcase_subtitle": ""
+"showcase_description": ""
+"showcase_button": "Kontakt"
+## Homepage about
+"about_title": "Hvem er jeg?"
+"about_content": ""
+"about_button": "Om mig"
+## Homepage education
+"education_title": "Uddannelse"
+## Homepage experience
+"experience_button": "LinkedIn"
+"experience_button_url": ""
+"experience_button2": "Download CV"
+"experience_button2_url": ""
+"experience_button3": "Vis alle"
+"experience_button3_url": "/experience"
+## Homepage client & work
+"client_work_title": "Klienter & Arbejde"
+## Homepage newsletter
+"newsletter_title": "Nyhedsbrev"
+"newsletter_button": "Abonner"
+"newsletter_placeholder": "Din e-mail"
+"newsletter_success_message": "Tak for at abonnere på mit nyhedsbrev!"
+"newsletter_error_message": "Der opstod en fejl. Prøv venligst igen."
+"newsletter_note": "Vi deler aldrig din e-mail med andre."
+## Homepage testimonials
+"testimonials_title": "Anbefalinger"
+## Homepage contact
+"contact_title": "Kontakt"
+"contact_button": "Send besked"
+"contact_form_name": "Fulde navn"
+"contact_form_email": "E-mailadresse"
+"contact_form_message": "Skriv din besked her"
+"contact_phone_title": "Telefonnummer"
+"contact_email_title": "E-mail"
+"contact_address_title": "Adresse"
+## Blog
+"read_more": "Læs mere"
+"published_on": "Udgivet den "
+"continue_reading": "Fortsæt med at læse"
+## Blog Stats (for list-cards layout)
+"blog_stats_posts": "Indlæg"
+"blog_stats_last_updated": "Senest opdateret"
+"blog_stats_first_post": "Første indlæg"
+"blog_stats_topics": "Emner"
+"blog_stats_latest_post": "Seneste indlæg"
+## 404 Page
+"404_title": "Side ikke fundet"
+"404_description": "Beklager, men siden du ledte efter kunne ikke findes."
+"404_button": "Tilbage til forsiden"
+## Related Posts
+"related_posts": "Relaterede indlæg"
+## Social Sharing
+"share_this_post": "Del dette indlæg"
+"share_on_twitter": "Del på Twitter"
+"share_on_linkedin": "Del på LinkedIn"
+"share_on_facebook": "Del på Facebook"
+"share_via_email": "Del via e-mail"
+"share_twitter_label": "Twitter"
+"share_linkedin_label": "LinkedIn"
+"share_facebook_label": "Facebook"
+"share_email_label": "E-mail"
+"share_on_bluesky": "Del på Bluesky"
+"share_bluesky_label": "Bluesky"
+"share_on_mastodon": "Del på Mastodon"
+"share_mastodon_label": "Mastodon"
+## Table of Contents
+"table_of_contents": "Indholdsfortegnelse"
+## Comments
+"comments": "Kommentarer"
+## Reading time and metadata
+"min_read": "min. læsetid"
+"last_updated": "Opdateret"
+## Taxonomy
+"categories": "Kategorier"
+"post_singular": "indlæg"
+"post_plural": "indlæg"
+"tags": "Tags"
+"authors": "Forfattere"
+"series": "Serier"
+"author_posts": "Indlæg af denne forfatter"
+"series_posts": "Indlæg i serien"
+"series_part": "Del"
+"recent_posts": "Seneste indlæg"
+"popular_tags": "Populære tags"
+"view_all_tags": "Se alle tags"
+## Color Scheme
+"color_scheme": "Farveskema"
+## Search
+"search_tags_label": "Tags"
+"search_categories_label": "Kategorier"
+"search_filter_by_tag": "Filtrer søgeresultater efter tag"
+"search_filter_by_category": "Filtrer søgeresultater efter kategori"
+"search_title": "Søg på sitet"
+"search_placeholder": "Skriv for at søge..."
+"search_results_heading": "Matchende sider"
+"search_min_chars": "Indtast mindst 2 tegn for at søge"
+"search_no_matches": "Ingen resultater fundet"
+"search_loading": "Indlæser..."
+"search_error_generic": "Der opstod et problem med søgningen. Prøv igen senere."
+"search_untitled": "Uden titel"
+"search_no_preview": "Ingen forhåndsvisning tilgængelig"
+"primary_navigation": "Primær navigation"
+"footer_navigation": "Fodnavigation"

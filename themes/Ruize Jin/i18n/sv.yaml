@@ -1,0 +1,126 @@
+## Meta tags
+"meta_title": ""
+## Header
+"logo_alt": ""
+"logo_text1": ""
+"logo_text2": ""
+## General
+"home": "Hem"
+"skipToMainContent": "Hoppa till huvudinnehåll"
+"toggle_navigation": "Växla navigering"
+## Footer
+"footer_notice": ""
+"language": "Språk"
+"toggle_theme": "Växla tema"
+"theme_light": "☀️ Ljust"
+"theme_dark": "🌑 Mörkt"
+"theme_auto": "✨ Auto"
+## Homepage head title
+"head_title": ""
+"head_description": ""
+## Homepage showcase
+"showcase_title": ""
+"showcase_subtitle": ""
+"showcase_description": ""
+"showcase_button": "Kontakt"
+## Homepage about
+"about_title": "Vem är jag?"
+"about_content": ""
+"about_button": "Om mig"
+## Homepage education
+"education_title": "Utbildning"
+## Homepage experience
+"experience_button": "LinkedIn"
+"experience_button_url": ""
+"experience_button2": "Ladda ner CV"
+"experience_button2_url": ""
+"experience_button3": "Visa alla"
+"experience_button3_url": "/experience"
+## Homepage client & work
+"client_work_title": "Kunder & Arbete"
+## Homepage newsletter
+"newsletter_title": "Nyhetsbrev"
+"newsletter_button": "Prenumerera"
+"newsletter_placeholder": "Din e-post"
+"newsletter_success_message": "Tack för att du prenumererar på mitt nyhetsbrev!"
+"newsletter_error_message": "Ett fel uppstod. Försök igen."
+"newsletter_note": "Vi kommer aldrig att dela din e-post med andra."
+## Homepage testimonials
+"testimonials_title": "Rekommendationer"
+## Homepage contact
+"contact_title": "Kontakt"
+"contact_button": "Skicka meddelande"
+"contact_form_name": "Fullständigt namn"
+"contact_form_email": "E-postadress"
+"contact_form_message": "Skriv ditt meddelande här"
+"contact_phone_title": "Telefonnummer"
+"contact_email_title": "E-post"
+"contact_address_title": "Adress"
+## Blog
+"read_more": "Läs mer"
+"published_on": "Publicerad den "
+"continue_reading": "Fortsätt läsa"
+## Blog Stats (for list-cards layout)
+"blog_stats_posts": "Inlägg"
+"blog_stats_last_updated": "Senast uppdaterad"
+"blog_stats_first_post": "Första inlägget"
+"blog_stats_topics": "Ämnen"
+"blog_stats_latest_post": "Senaste inlägget"
+## 404 Page
+"404_title": "Sidan hittades inte"
+"404_description": "Tyvärr, men sidan du letade efter kunde inte hittas."
+"404_button": "Tillbaka till startsidan"
+## Related Posts
+"related_posts": "Relaterade inlägg"
+## Social Sharing
+"share_this_post": "Dela detta inlägg"
+"share_on_twitter": "Dela på Twitter"
+"share_on_linkedin": "Dela på LinkedIn"
+"share_on_facebook": "Dela på Facebook"
+"share_via_email": "Dela via e-post"
+"share_twitter_label": "Twitter"
+"share_linkedin_label": "LinkedIn"
+"share_facebook_label": "Facebook"
+"share_email_label": "E-post"
+"share_on_bluesky": "Dela på Bluesky"
+"share_bluesky_label": "Bluesky"
+"share_on_mastodon": "Dela på Mastodon"
+"share_mastodon_label": "Mastodon"
+## Table of Contents
+"table_of_contents": "Innehållsförteckning"
+## Comments
+"comments": "Kommentarer"
+## Reading time and metadata
+"min_read": "min läsningstid"
+"last_updated": "Uppdaterad"
+## Taxonomy
+"categories": "Kategorier"
+"post_singular": "inlägg"
+"post_plural": "inlägg"
+"tags": "Taggar"
+"authors": "Författare"
+"series": "Serier"
+"author_posts": "Inlägg av denna författare"
+"series_posts": "Inlägg i serien"
+"series_part": "Del"
+"recent_posts": "Senaste inläggen"
+"popular_tags": "Populära taggar"
+"view_all_tags": "Visa alla taggar"
+## Color Scheme
+"color_scheme": "Färgschema"
+## Search
+"search_tags_label": "Taggar"
+"search_categories_label": "Kategorier"
+"search_filter_by_tag": "Filtrera sökresultat efter tagg"
+"search_filter_by_category": "Filtrera sökresultat efter kategori"
+"search_title": "Sök på webbplatsen"
+"search_placeholder": "Skriv för att söka..."
+"search_results_heading": "Matchande sidor"
+"search_min_chars": "Ange minst 2 tecken för att söka"
+"search_no_matches": "Inga träffar hittades"
+"search_loading": "Laddar..."
+"search_error_generic": "Ett problem uppstod med sökningen. Försök igen senare."
+"search_untitled": "Utan titel"
+"search_no_preview": "Ingen förhandsvisning tillgänglig"
+"primary_navigation": "Primär navigering"
+"footer_navigation": "Sidfotsnavigering"

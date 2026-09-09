@@ -1,0 +1,254 @@
+# Workflow to verify that the exampleSite runs ok
+name: Test example site
+
+permissions:
+  contents: write
+  id-token: write
+  pages: write
+  pull-requests: write
+  checks: write
+  statuses: write
+on:
+    # Runs on pull requests targeting the default branch
+    pull_request:
+        branches: ["main"]
+    # Runs on pushes to main so the jobs appear as selectable status checks
+    # in branch protection rules ("Require status checks to pass")
+    push:
+        branches: ["main"]
+    # Allows you to run this workflow manually from the Actions tab
+    workflow_dispatch:
+env:
+  CI: true
+
+jobs:
+  # Prepare dependencies job
+  prepare:
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: ${{ vars.HUGO_VERSION || '0.158.0' }}
+    steps:
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+
+      - name: Cache Node Modules
+        id: cache-node-modules
+        uses: actions/cache@v5
+        with:
+          path: |
+            node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+        
+      - name: Cache Playwright Browsers
+        id: cache-playwright
+        uses: actions/cache@v5
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('package-lock.json') }}
+          
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers
+        if: steps.cache-playwright.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
+  # Test with no menus
+  test-no-menus:
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: ${{ vars.HUGO_VERSION || '0.158.0' }}
+    steps:
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+
+      - name: Restore Node Modules
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+          
+      - name: Restore Playwright Browsers
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('package-lock.json') }}
+
+      - name: Build site (no menus)
+        run: |
+          cd exampleSite
+          hugo server --themesDir ../.. --buildDrafts --buildFuture --bind 0.0.0.0 --config hugo.toml,hugo.disablemenu.toml &
+          sleep 10
+
+      - name: Run Playwright tests (no menus)
+        run: npm run test:e2e:no-menus
+
+      - name: Get the failure count
+        id: tests
+        run: |
+          export count=$(cat ./playwright-report/result.txt | grep Failed | cut -d ':' -f 2 | tr -d ' ') 
+          echo "fail_count=$count" >> "$GITHUB_OUTPUT"
+          echo $count
+
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-no-menus
+          path: playwright-report/
+          retention-days: 30
+    outputs:
+      fail_count: ${{ steps.tests.outputs.fail_count }}
+
+  # Test with menus
+  test-with-menus:
+    needs: prepare
+    runs-on: ubuntu-latest
+    env:
+      HUGO_VERSION: ${{ vars.HUGO_VERSION || '0.158.0' }}
+    steps:
+      - name: Install Hugo CLI
+        run: |
+          wget -O ${{ runner.temp }}/hugo.deb https://github.com/gohugoio/hugo/releases/download/v${HUGO_VERSION}/hugo_extended_${HUGO_VERSION}_linux-amd64.deb \
+          && sudo dpkg -i ${{ runner.temp }}/hugo.deb
+      
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          submodules: recursive
+          ref: ${{ github.head_ref || github.ref_name }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: lts/*
+
+      - name: Restore Node Modules
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            node_modules
+          key: modules-${{ hashFiles('package-lock.json') }}
+          
+      - name: Restore Playwright Browsers
+        uses: actions/cache/restore@v5
+        with:
+          path: |
+            ~/.cache/ms-playwright
+          key: playwright-${{ hashFiles('package-lock.json') }}
+
+      - name: Build and serve demo site (with menus)
+        run: |
+          cd exampleSite
+          hugo server --themesDir ../.. --buildDrafts --buildFuture --bind 0.0.0.0 &
+          sleep 10
+
+      - name: Remove existing visual snapshots (to regenerate on Linux)
+        run: rm -rf tests/e2e/rtl-visual.spec.ts-snapshots/
+
+      - name: Generate visual regression snapshots on Linux
+        run: npx playwright test tests/e2e/rtl-visual.spec.ts --update-snapshots --reporter=line
+        continue-on-error: true
+
+      - name: List generated snapshots
+        run: ls -la tests/e2e/rtl-visual.spec.ts-snapshots/ || echo "No snapshots directory found"
+
+      - name: Commit updated snapshots
+        if: github.event_name == 'pull_request'
+        uses: stefanzweifel/git-auto-commit-action@v7
+        with:
+          commit_message: "chore: update visual regression snapshots from CI"
+          file_pattern: "tests/e2e/*-snapshots/*.png"
+
+      - name: Run Playwright tests (with menus)
+        run: npm run test:e2e
+
+      - name: Get the failure count
+        id: tests
+        run: |
+          export count=$(cat ./playwright-report/result.txt | grep Failed | cut -d ':' -f 2 | tr -d ' ') 
+          echo "fail_count=$count" >> "$GITHUB_OUTPUT"
+          echo $count
+
+      - uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-with-menus
+          path: playwright-report/
+          retention-days: 30
+    outputs:
+      fail_count: ${{ steps.tests.outputs.fail_count }}
+
+  # Combine reports and publish
+  publish-reports:
+    if: github.ref == 'refs/heads/main'
+    continue-on-error: true
+    needs: [test-no-menus, test-with-menus]
+    runs-on: ubuntu-latest
+    permissions: 
+        pages: write
+        id-token: write
+    environment:
+        name: github-pages
+        url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+        - name: Download no-menus report
+          uses: actions/download-artifact@v8
+          with:
+            name: playwright-report-no-menus
+            path: playwright-report-no-menus
+
+        - name: Download with-menus report
+          uses: actions/download-artifact@v8
+          with:
+            name: playwright-report-with-menus
+            path: playwright-report-with-menus
+            
+        - name: Combine reports
+          run: |
+            mkdir -p combined-report
+            cp -r playwright-report-no-menus/* combined-report/
+            mkdir -p combined-report/with-menus
+            cp -r playwright-report-with-menus/* combined-report/with-menus/
+            
+        - name: Upload combined artifact for pages
+          if: always()
+          uses: actions/upload-pages-artifact@v4
+          with:
+                path: "./combined-report"
+        
+        - name: Deploy to GitHub Pages
+          id: deployment
+          uses: actions/deploy-pages@v4
+            
+        - name: Check for test failures
+          if: ${{ needs.test-no-menus.outputs.fail_count != '0' || needs.test-with-menus.outputs.fail_count != '0' }}
+          run: exit 1

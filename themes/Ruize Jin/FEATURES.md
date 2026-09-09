@@ -1,0 +1,169 @@
+# New Features Documentation
+
+This document describes the new features added to the Adritian Hugo theme to make it more competitive with other popular Hugo themes.
+
+## Features Overview
+
+### 1. Related Posts
+
+**What it does:** Automatically displays related blog posts at the end of each post based on shared tags and publication dates.
+
+**How to use:** No configuration needed - it works automatically for all blog posts.
+
+**Customization:** The related content algorithm can be adjusted in `hugo.toml` under the `[related]` section.
+
+### 2. Social Sharing Buttons
+
+**What it does:** Adds sharing buttons for Twitter/X, LinkedIn, Facebook, Bluesky, Mastodon, and Email to all blog posts.
+
+**How to use:** Twitter/X, LinkedIn, Facebook, and Email are enabled by default. Bluesky and Mastodon are opt-in. To customize:
+
+```toml
+[params.sharing]
+  enabled = true        # Set to false to disable all sharing
+  twitter = true        # Show/hide individual platforms (enabled by default)
+  linkedin = true
+  facebook = true
+  email = true
+  bluesky = true        # Opt-in: set to true to show
+  mastodon = true       # Opt-in: set to true to show
+```
+
+### 3. Table of Contents (TOC)
+
+**What it does:** Auto-generates a table of contents from post headings for easy navigation.
+
+**How to use:** Add to post frontmatter:
+
+```yaml
+---
+toc: true
+tocSticky: true  # Optional: makes TOC sticky on desktop
+---
+```
+
+**Requirements:** Only appears if post has more than 400 words.
+
+### 4. Comments Integration
+
+**What it does:** Supports three popular comment systems: Disqus, Giscus, and Utterances.
+
+**How to use:**
+
+#### Option 1: Disqus
+```toml
+disqusShortname = "your-shortname"
+
+[params.comments]
+  enabled = true
+  provider = "disqus"
+```
+
+#### Option 2: Giscus (GitHub Discussions)
+```toml
+[params.comments]
+  enabled = true
+  provider = "giscus"
+  
+  [params.comments.giscus]
+    repo = "username/repo"
+    repoId = "R_xxxxx"
+    category = "General"
+    categoryId = "DIC_xxxxx"
+```
+
+#### Option 3: Utterances (GitHub Issues)
+```toml
+[params.comments]
+  enabled = true
+  provider = "utterances"
+  
+  [params.comments.utterances]
+    repo = "username/repo"
+    issueTerm = "pathname"
+    theme = "preferred-color-scheme"
+```
+
+### 5. Enhanced Reading Metadata
+
+**What it does:** Displays additional metadata for blog posts:
+- Estimated reading time
+- Last modified date (if specified)
+- Word count
+
+**How to use:** Automatic for reading time and word count. For last modified:
+
+```yaml
+---
+title: "My Post"
+date: 2025-01-15
+lastmod: 2025-02-20  # Add this field
+---
+```
+
+### 6. View Transitions
+
+**What it does:** Provides smooth page-to-page transitions using the native [View Transitions API](https://developer.mozilla.org/en-US/docs/Web/API/View_Transition_API). Header and footer stay stable while main content fades between pages. Respects `prefers-reduced-motion` by disabling animations automatically.
+
+**How to use:** Enabled by default. To disable, add to your `hugo.toml`:
+
+```toml
+[params]
+viewTransitions = false
+```
+
+**Browser support:** Progressive enhancement — browsers without View Transitions API support will simply navigate normally.
+
+### 7. Community Showcase
+
+**What it does:** Provides a dedicated page to display websites built with the Adritian theme. Features a card grid with auto-generated screenshots (via microlink.io), tag-based filtering, and a submission CTA linking to a GitHub issue template.
+
+**How to use:**
+
+1. Create `content/showcase.md` with `layout: "showcase"` in the frontmatter
+2. Create `data/showcase.yml` with site entries (name, url, description, github, repo, tags)
+3. Optionally add a menu link in `hugo.toml`
+
+**Data format:**
+
+```yaml
+sites:
+  - name: "Site Name"
+    url: "https://example.com"
+    description: "Short description."
+    github: "username"
+    repo: "username/repo-name"
+    tags: [portfolio, blog]
+```
+
+**Features:** Tag filtering (client-side JS), `aria-pressed` for accessibility, `id="main-content"` for skip-to-content, graceful fallback when data file is missing.
+
+## Styling
+
+All new features include:
+- Full dark mode support
+- Responsive design for mobile/tablet/desktop
+- Consistent styling with the theme
+- Accessibility features (ARIA labels, semantic HTML)
+
+## Translations
+
+All features support the theme's multilingual capabilities with translations for:
+- English (en)
+- Spanish (es)
+- French (fr)
+- German (de)
+- Dutch (nl)
+- Danish (da)
+- Italian (it)
+- Portuguese (pt)
+- Swedish (sv)
+- Norwegian (no)
+- Polish (pl)
+
+Additional languages can be added by creating translation files in `i18n/`.
+
+## Demo
+
+See all features in action at the demo blog post:
+`/blog/new-features-demo/` in the example site.

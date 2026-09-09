@@ -1,0 +1,58 @@
+<section class="portfolio-home-projects" aria-labelledby="home-projects-title">
+  <div class="container">
+    <div class="portfolio-home-entry portfolio-home-projects__inner">
+      <h2 id="home-projects-title">PROJECTS</h2>
+      <p>Selected work in machine learning, analytics, and applied AI.</p>
+      <a class="portfolio-section-link" href="{{ "projects/" | relURL }}">View Projects <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>
+
+<section class="portfolio-home-life" aria-labelledby="home-life-title">
+  <div class="container">
+    <div class="portfolio-home-entry portfolio-home-life__inner">
+      <h2 id="home-life-title">Life Beyond Data</h2>
+      <p>Cooking, birdwatching, and a little time on stage.</p>
+
+      <div class="portfolio-home-life-grid" aria-label="Life Beyond Data categories">
+        <a class="portfolio-life-teaser" href="{{ "life/cooking/" | relURL }}">
+          <span class="portfolio-life-teaser__media">
+            {{ partial "responsive-image.html" (dict
+              "src" "images/life/cook-profile.png"
+              "alt" ""
+              "class" "portfolio-life-teaser__image"
+              "sizes" "(min-width: 992px) 31vw, (min-width: 768px) 48vw, 100vw"
+            ) }}
+          </span>
+          <h3>Cooking</h3>
+        </a>
+
+        <a class="portfolio-life-teaser" href="{{ "life/#birdwatching" | relURL }}">
+          <span class="portfolio-life-teaser__media">
+            {{ partial "responsive-image.html" (dict
+              "src" "images/life/bird-watching profile.JPG"
+              "alt" ""
+              "class" "portfolio-life-teaser__image"
+              "sizes" "(min-width: 992px) 31vw, (min-width: 768px) 48vw, 100vw"
+            ) }}
+          </span>
+          <h3>Birdwatching</h3>
+        </a>
+
+        <a class="portfolio-life-teaser" href="{{ "life/standup/" | relURL }}">
+          <span class="portfolio-life-teaser__media">
+            {{ partial "responsive-image.html" (dict
+              "src" "images/life/standup-profile.png"
+              "alt" ""
+              "class" "portfolio-life-teaser__image"
+              "sizes" "(min-width: 992px) 31vw, (min-width: 768px) 48vw, 100vw"
+            ) }}
+          </span>
+          <h3>Stand-up Comedy</h3>
+        </a>
+      </div>
+
+      <a class="portfolio-section-link" href="{{ "life/" | relURL }}">Explore <span aria-hidden="true">→</span></a>
+    </div>
+  </div>
+</section>

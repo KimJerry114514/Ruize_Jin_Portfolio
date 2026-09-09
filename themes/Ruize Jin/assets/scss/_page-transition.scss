@@ -1,0 +1,55 @@
+/* View Transitions API (progressive enhancement) */
+@view-transition {
+  navigation: auto;
+}
+
+/*
+ * Only tag main content for view transitions.
+ * Header and footer are excluded because the header changes height
+ * between sticky (scrolled) and non-sticky states, which causes a
+ * visible jump during transitions.
+ */
+main {
+  view-transition-name: main-content;
+}
+
+/*
+ * Root transition is instant to prevent the header height jump
+ * (header changes between sticky and non-sticky padding).
+ */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+}
+
+/*
+ * Main content gets a quick, subtle fade to smooth the page swap
+ * without conflicting with the rad-animation scroll entries.
+ */
+::view-transition-old(main-content) {
+  animation: 0.15s ease-out both vt-fade-out;
+}
+
+::view-transition-new(main-content) {
+  animation: 0.15s ease-in both vt-fade-in;
+}
+
+@keyframes vt-fade-out {
+  to { opacity: 0; }
+}
+
+@keyframes vt-fade-in {
+  from { opacity: 0; }
+}
+
+/* Respect reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  @view-transition {
+    navigation: none;
+  }
+
+  ::view-transition-old(main-content),
+  ::view-transition-new(main-content) {
+    animation: none;
+  }
+}

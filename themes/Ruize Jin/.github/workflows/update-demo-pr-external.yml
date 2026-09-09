@@ -1,0 +1,188 @@
+## Updates demo site (https://github.com/zetxek/adritian-demo)
+## taken from https://stackoverflow.com/a/68213855/570087
+
+name: PR demo site (on external PR)
+
+permissions:
+  contents: read
+  id-token: write
+  pages: write
+  pull-requests: write
+  checks: write
+  statuses: write
+  actions: write
+
+## This will open a PR which will open a vercel preview URL in the demo site
+on:
+  pull_request_target:
+    types: [labeled]
+  workflow_dispatch:
+
+jobs:
+  update-demo:
+    env:
+      SOURCE_BRANCH_NAME: ${{ github.head_ref || github.ref_name }} # PR branch name
+      PR_NUMBER: ${{ github.event.number }}
+    runs-on: ubuntu-latest
+    if: contains(github.event.pull_request.labels.*.name, 'safe to test')
+    steps:
+      - name: Checkout source repository (theme)
+        uses: actions/checkout@v6
+        with:
+          path: theme-source
+          # Use the fork repo and exact commit SHA for external PRs (pull_request_target).
+          # No token needed for public forks.
+          repository: ${{ github.event.pull_request.head.repo.full_name }}
+          ref: ${{ github.event.pull_request.head.sha }}
+      
+      - name: Checkout demo repository
+        uses: actions/checkout@v6
+        with: 
+          repository: zetxek/adritian-demo
+          path: demo-repo
+          token: ${{ secrets.PRIVATE_TOKEN_GITHUB }}
+      
+      - name: Dump github context
+        run:   echo "$GITHUB_CONTEXT"
+        shell: bash
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+
+      - name: Send pull-request
+        env:
+          PRIVATE_TOKEN_GITHUB: ${{ secrets.PRIVATE_TOKEN_GITHUB }}
+        run: |
+          LATEST_TAG=$(cd theme-source && git describe --tags --always)
+          LATEST_COMMIT=$(cd theme-source && git rev-parse HEAD)
+          SOURCE_REPOSITORY="zetxek/adritian-free-hugo-theme"
+          REPOSITORY="zetxek/adritian-demo"
+          PR_URL="https://github.com/$SOURCE_REPOSITORY/pull/$PR_NUMBER"
+          BRANCH_NAME="theme-update/update-theme-to-$LATEST_TAG"
+          BASE_BRANCH="main"
+          ASSIGNEE="zetxek"
+
+          echo "Latest tag: $LATEST_TAG"
+          echo "Latest commit: $LATEST_COMMIT"
+          echo "PR URL: $PR_URL"
+
+          git config --global --add --bool push.autoSetupRemote true
+
+          # Use the already-checked-out demo repository (avoids redundant clone
+          # and path resolution issues with nested subdirectories).
+          cd demo-repo
+
+          # Setup the committers identity.
+          git config user.email "actions@github.com"
+          git config user.name "GitHub Actions - update theme module version"
+
+          # Set up remote with token for pushing
+          git remote set-url origin https://some-user:${PRIVATE_TOKEN_GITHUB}@github.com/$REPOSITORY
+
+          # Create a new feature branch for the changes.
+          echo "Working branch: $BRANCH_NAME"
+          git checkout -b $BRANCH_NAME
+
+          # Commit any theme module or related changes (go.mod, etc.)
+          COMMIT_MSG_THEME='chore: update theme module to `'"$LATEST_TAG"'` from '"$PR_URL"
+          echo "Committing theme module changes: $COMMIT_MSG_THEME"
+          git add --all
+          git commit -m "$COMMIT_MSG_THEME" || echo "No theme module changes"
+
+          # Sync content from the checked-out theme source (one level up since
+          # we are now inside demo-repo/, and theme-source/ is a sibling dir).
+          CONTENT_SOURCE="../theme-source/exampleSite"
+          
+          # Sync content directories (blog posts, pages, etc.)
+          if [ -d "$CONTENT_SOURCE/content" ]; then
+            rsync -a --delete "$CONTENT_SOURCE/content/" content/
+            echo "✅ Synced content/"
+          fi
+          
+          # Sync assets (images, etc. referenced by content)
+          if [ -d "$CONTENT_SOURCE/assets" ]; then
+            rsync -a --delete "$CONTENT_SOURCE/assets/" assets/
+            echo "✅ Synced assets/"
+          fi
+          
+          # Sync data files
+          if [ -d "$CONTENT_SOURCE/data" ]; then
+            rsync -a --delete "$CONTENT_SOURCE/data/" data/
+            echo "✅ Synced data/"
+          fi
+          
+          # Sync static files
+          if [ -d "$CONTENT_SOURCE/static" ]; then
+            rsync -a --delete "$CONTENT_SOURCE/static/" static/
+            echo "✅ Synced static/"
+          fi
+          
+          # Sync i18n overrides
+          if [ -d "$CONTENT_SOURCE/i18n" ]; then
+            rsync -a --delete "$CONTENT_SOURCE/i18n/" i18n/
+            echo "✅ Synced i18n/"
+          fi
+          
+          # Sync hugo.toml with URL adjustment for preview
+          if [ -f "$CONTENT_SOURCE/hugo.toml" ]; then
+            cp "$CONTENT_SOURCE/hugo.toml" hugo.toml
+            sed -i -E 's|^baseURL[[:space:]]*=[[:space:]]*".*"|baseURL = "https://adritian-demo.vercel.app/"|' hugo.toml
+            echo "✅ Synced hugo.toml"
+          fi
+
+          COMMIT_MSG_CONTENT='chore: sync content/config to `'"$LATEST_TAG"'` from https://github.com/zetxek/adritian-free-hugo-theme'
+          echo "Committing content/config: $COMMIT_MSG_CONTENT"
+          git add --all
+          git commit -m "$COMMIT_MSG_CONTENT" || echo "No changes to content/config"
+
+          # Skip push and PR creation if there are no commits ahead of the base branch
+          COMMITS_AHEAD=$(git rev-list --count origin/$BASE_BRANCH..HEAD 2>/dev/null || echo "0")
+          if [ "$COMMITS_AHEAD" -eq "0" ]; then
+            echo "No changes to push. Skipping PR creation."
+            exit 0
+          fi
+
+          # Push all commits at once
+          echo "Pushing branch: $BRANCH_NAME"
+          git push origin $BRANCH_NAME --force
+
+          # Store the PAT in a file that can be accessed by the
+          # GitHub CLI.
+          echo "${PRIVATE_TOKEN_GITHUB}" > token.txt
+
+          # Authorize GitHub CLI for the current repository and
+          # create a pull-requests containing the updates.
+          echo "Logging in to GitHub CLI."
+          gh auth login --with-token < token.txt
+
+          # Check if the PR already exists - if there's no "number" returned, we default to empty string
+          PR_EXISTS=$(gh pr list --state open --base $BASE_BRANCH --head $BRANCH_NAME --json number | jq '.[0].number // empty')
+          echo "PR_EXISTS: $PR_EXISTS"
+          # Check if there's a PR number. If the PR exists, update it (empty = it doesn't exist)
+          if [ -n "$PR_EXISTS" ]; then
+            echo "PR Exists. Updating pull-request..."
+            gh pr view
+            
+            echo "✅ Pull-request created - done! "
+            
+          # Else, we create it
+          else
+            echo "✨PR Does not exist yet. Creating pull-request..."
+            PR_TITLE='preview: update theme to `'$SOURCE_BRANCH_NAME'`'
+            echo 'PR title: '$PR_TITLE
+            PR_BODY="⚠️ The source PR is not merged yet - this is a preview PR.
+            🤖 This automated PR updates the theme version to a PR in the source repo: $PR_URL.
+            🔗 Triggered by https://github.com/zetxek/adritian-free-hugo-theme/actions/workflows/update-demo-pr.yml"
+            echo "PR body: "$PR_BODY
+
+            gh pr create \
+              --title "$PR_TITLE" \
+              --body "$PR_BODY" \
+              --head $BRANCH_NAME \
+              --base $BASE_BRANCH \
+              --assignee $ASSIGNEE \
+              --label preview
+
+            echo "✅ Pull-request created - done! "
+          fi
+
+          

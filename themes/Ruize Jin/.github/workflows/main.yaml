@@ -1,0 +1,25 @@
+name: Update contributors
+
+permissions:
+  contents: write
+  id-token: write
+  pull-requests: read
+
+on:
+    workflow_dispatch:
+    push:
+        branches:
+            - main
+
+jobs:
+    contrib-readme-job:
+        runs-on: ubuntu-latest
+        name: Readme contributors
+        permissions:
+          contents: write
+          pull-requests: write
+        steps:
+            - name: Contribute List
+              uses: akhilmhdh/contributors-readme-action@v2.3.11
+              env:
+                  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

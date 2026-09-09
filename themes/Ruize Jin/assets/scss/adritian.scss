@@ -1,0 +1,760 @@
+@charset "UTF-8";
+
+{{ if .scheme }}$base-color: {{ .scheme.light }};
+$dark-primary: {{ .scheme.dark }};{{ end }}
+
+@import "variables";
+@import "theme-init";
+
+// Bootstrap: selective imports of only the modules the theme's own
+// layouts/partials use, instead of the full framework (~89% of the full
+// Bootstrap CSS build was unused). Downstream sites' content classes are
+// intentionally NOT considered here — only theme-level markup is. When
+// adding new theme markup that needs a Bootstrap component, add its
+// matching partial import below.
+
+// Configuration (required by every component; mixins/utilities emit no
+// CSS on their own, so importing them in full carries no size cost)
+@import "bootstrap/functions";
+@import "bootstrap/variables";
+@import "bootstrap/variables-dark";
+@import "bootstrap/maps";
+@import "bootstrap/mixins";
+@import "bootstrap/utilities";
+
+// Base layout & typography (blockquote/list/heading styling used by
+// arbitrary rendered blog/markdown content across downstream sites)
+@import "bootstrap/root";
+@import "bootstrap/reboot";
+@import "bootstrap/type";
+@import "bootstrap/images";
+@import "bootstrap/containers";
+@import "bootstrap/grid";
+
+// Forms: search box, contact form, newsletter form
+@import "bootstrap/forms/form-control";
+@import "bootstrap/forms/form-text";
+@import "bootstrap/forms/input-group";
+
+@import "bootstrap/buttons";
+@import "bootstrap/transitions"; // .fade/.collapsing animation used by navbar collapse & dropdowns
+@import "bootstrap/dropdown"; // language/theme/color-scheme selectors
+@import "bootstrap/nav";
+@import "bootstrap/navbar"; // main site nav (collapse + dropdown JS)
+@import "bootstrap/card"; // blog/experience/showcase cards
+@import "bootstrap/breadcrumb"; // blog/page breadcrumbs (used in layouts/)
+@import "bootstrap/progress"; // skills showcase progress bars
+@import "bootstrap/pagination"; // Hugo's _internal/pagination.html output
+@import "bootstrap/alert"; // search "no results", newsletter fail state
+@import "bootstrap/badge"; // taxonomy counts, showcase tags
+
+// Helpers actually referenced in layouts/
+@import "bootstrap/helpers/position"; // .fixed-top on the site header
+@import "bootstrap/helpers/stretched-link";
+@import "bootstrap/helpers/visually-hidden";
+@import "bootstrap/helpers/icon-link"; // .icon-link/.icon-link-hover on blog list read-more links
+
+// Utilities API: generates the d-*, m-*, p-*, gap-*, text-*, flex utility
+// classes used liberally throughout layouts/partials/*.html. Must be
+// imported last among the Bootstrap imports, mirroring Bootstrap's own
+// bootstrap.scss ordering (theme partials below are imported afterwards).
+@import "bootstrap/utilities/api";
+
+@import "navbar";
+@import "menu";
+@import "raditian";
+@import "blog";
+@import "code";
+@import "experience";
+@import "print";
+@import "search";
+@import "page-transition";
+@import "skills";
+@import "features";
+@import "taxonomy";
+@import "rtl";
+@import "lightbox";
+
+/** main style **/
+.header .navbar-brand span:first-child {
+  color: $base-color;
+}
+
+.header .container {
+  padding-left: 10px;
+}
+
+html body ::selection {
+  background-color: $base-color;
+  color: #fff;
+}
+
+.container {
+  padding-left: 24px;
+  padding-right: 24px;
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: normal;
+  color: #000;
+  margin-bottom: 8px;
+}
+
+.btn:focus-visible{
+  box-shadow: 0 0 0 0.2rem $primary;
+}
+
+a:focus-visible,
+button:not(.btn):focus-visible,
+[role="button"]:focus-visible,
+.nav-link:focus-visible,
+.navbar-brand:focus-visible,
+.navbar-toggler:focus-visible,
+.dropdown-item:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid rgba($base-color, 0.6);
+  outline-offset: 3px;
+}
+
+@media (min-width: 992px) {
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    margin-bottom: 10px;
+  }
+}
+
+h1,
+h2 {
+  margin-bottom: 16px;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+@media (min-width: 992px) {
+  h1 {
+    margin-bottom: 10px;
+  }
+  h2 {
+    margin-bottom: 10px;
+    font-size: 36px;
+  }
+}
+
+h3,
+h4 {
+  font-size: 20px;
+  font-weight: 600;
+}
+
+@media (min-width: 992px) {
+  h3,
+  h4 {
+    font-size: 32px;
+  }
+}
+
+p {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+  margin-bottom: 0.75rem;
+  color: #000;
+}
+
+b, strong{
+  font-weight: 600;
+}
+
+.display-1 {
+  font-size: 36px;
+  font-weight: 800;
+  line-height: normal;
+  color: #000;
+}
+
+.showcase-section .platform-links.shortcode {
+  /* align to the left margin only on larger screens to prevent horizontal scroll on mobile */
+  @media (min-width: 992px) {
+    margin-left: -40px;
+  }
+}
+
+@media (min-width: 992px) {
+  .display-1 {
+    font-size: 60px;
+  }
+}
+
+.lead {
+  margin-bottom: 1rem;
+}
+
+.lead a,
+p a,
+span a {
+  color: #000;
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-position: from-font;
+  text-decoration-style: solid;
+  text-decoration-thickness: 1px;
+  transition: all 0.5s;
+}
+
+.lead a:hover,
+p a:hover,
+span a:hover {
+  color: $base-color;
+}
+
+.lead {
+  font-size: 16px;
+  font-weight: 300;
+  line-height: 1.5;
+  letter-spacing: 0;
+  color: #000;
+}
+
+br {
+  content: "";
+  margin: 2em;
+  display: block;
+  font-size: 24%;
+}
+
+@media (min-width: 992px) {
+  .lead {
+    font-size: 18px;
+  }
+  .contact {
+    margin-top: -2px;
+  }
+}
+
+@media (min-width: 992px) {
+  .ml-lg-auto,
+  .mx-lg-auto {
+    margin-left: auto !important;
+  }
+
+  #mobile-header-language-selector,
+  #mobile-header-color-selector {
+    display: none;
+  }
+}
+
+.dropdown-item.selected {
+  font-weight: bold;
+}
+
+#mobile-header-language-selector,
+#mobile-header-color-selector {
+  flex-direction: column;
+}
+
+#languages-dropdown-mobile-header,
+#theme-dropdown-mobile-header {
+  font-size: inherit;
+}
+
+a.dropdown-item.translation,
+li.dropdown-item.current.selected {
+  width: 100%;
+  padding: 4px 10px;
+}
+
+li.dropdown-item.choice a {
+  padding-left: 30px;
+}
+
+.dropdown-menu button[aria-pressed="true"] {
+  font-weight: bold;
+
+  // The active item's background is the scheme's own color, so the swatch
+  // (same color) would be invisible. Give it a white ring to stay readable.
+  .scheme-swatch {
+    border-color: rgba(255, 255, 255, 0.9) !important;
+    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.35);
+  }
+}
+
+html[data-bs-theme="dark"] {
+  #dark-toggle {
+    span.dark {
+      display: none;
+    }
+  }
+
+}
+
+html[data-bs-theme="light"] {
+  #dark-toggle {
+    span.light {
+      display: none;
+    }
+  }
+}
+
+footer_links .nav-item .nav-link::after {
+  color: white;
+  background-color: white !important;
+}
+
+/* skip to content */
+.skip-to-content-link {
+  position: absolute;
+  left: -9999px;
+  z-index: 999;
+  padding: 1em;
+  background-color: white;
+  color: black;
+  opacity: 0;
+}
+
+.skip-to-content-link:focus,
+.skip-to-content-link:focus-visible {
+  left: 50%;
+  transform: translateX(-50%);
+  opacity: 1;
+}
+
+/* dark mode */
+@include color-mode(dark) {
+  $primary: $dark-primary;
+  html body,
+  body {
+    color: #fff;
+    background-color: #181818;
+    // Override link hover colour: the default darken($base-color, 15%) is too dark
+    // to be readable on the dark background (#181818).
+    --bs-link-hover-color: #{$dark-primary};
+    --bs-link-hover-color-rgb: #{red($dark-primary)}, #{green($dark-primary)}, #{blue($dark-primary)};
+  }
+
+  .btn:focus-visible{
+    box-shadow: 0 0 0 0.2rem rgba($dark-primary, 0.7);
+  }
+
+  a:focus-visible,
+  button:not(.btn):focus-visible,
+  [role="button"]:focus-visible,
+  .nav-link:focus-visible,
+  .navbar-brand:focus-visible,
+  .navbar-toggler:focus-visible,
+  .dropdown-item:focus-visible,
+  input:focus-visible,
+  textarea:focus-visible,
+  select:focus-visible {
+    outline-color: rgba($dark-primary, 0.7);
+  }
+  .header .navbar-brand span:nth-child(2) {
+    color: #fff;
+  }
+  .header .navbar .nav-item .nav-link::after {
+    background-color: #fff;
+  }
+  .header .navbar .nav-item .nav-link:hover a {
+    text-decoration: none;
+  }
+
+  .navbar-light .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3e%3cpath stroke='rgba(255, 255, 255, 0.5)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+  }
+  .header.collapse.show::before,
+  .header.collapsing::before {
+    background-color: #181818;
+  }
+
+  @media (min-width: 992px) {
+    .header .navbar .nav-item:hover .nav-link::after {
+      background-color: #fff;
+    }
+  }
+
+  @media only screen and (max-width: 990px) {
+    .header .navbar .nav-item:first-child {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    .header .navbar .nav-item {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+  }
+  .header--sticky-triggered {
+    background: #181818;
+  }
+  .header .navbar-light .navbar-nav .nav-link,
+  .header .navbar-light .navbar-nav .btn-link {
+    color: #fff;
+  }
+  .h1,
+  .h2,
+  .h3,
+  .h4,
+  .h5,
+  .h6,
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    color: #fff;
+  }
+  .section li::before {
+    background-color: $light-text-emphasis-dark;
+  }
+  .display-1 {
+    color: #fff;
+  }
+  .lead {
+    color: #fff;
+  }
+
+  .lead a,
+  p a,
+  span a {
+    color: #fff;
+  }
+  .lead a:hover,
+  p a:hover,
+  span a:hover {
+    color: $dark-primary;
+  }
+  p {
+    color: $light-text-emphasis-dark;
+  }
+  .platform-links [class^="icon-"] {
+    color: #fff !important;
+  }
+
+  .education__degree,
+  .experience__date {
+    color: #a6a6a6;
+  }
+  .education__title {
+    color: #fff;
+  }
+  .education__date {
+    color: #d5d5d5;
+  }
+  .education::before {
+    background-color: #202020;
+  }
+  .testimonial__author-info span {
+    color: #f18983;
+  }
+  .section--contact .container {
+    background-color: #181818;
+  }
+  .contact__info span {
+    color: #fff;
+  }
+  .contact__info h3 {
+    color: #bebdbd;
+  }
+  .section--contact {
+    background-image: url(../img/contact-bg-dark.png);
+    background-color: #181818;
+  }
+  .btn-primary {
+    background-color: #fff;
+    color: #000;
+  }
+  .btn-primary:hover {
+    border-color: #fff;
+    color: #fff;
+    background: transparent;
+  }
+  .btn-frameless {
+    color: #fff;
+    border-color: #fff;
+  }
+  .btn-frameless.disabled,
+  .btn-frameless.focus,
+  .btn-frameless:disabled,
+  .btn-frameless:focus,
+  .btn-frameless:hover,
+  .btn-frameless:not(:disabled):not(.disabled).active,
+  .btn-frameless:not(:disabled):not(.disabled):active,
+  .show > .btn-frameless.dropdown-toggle {
+    background-color: white;
+    border-color: #fff;
+    color: #181818;
+  }
+  input.form-control,
+  input[type="text"],
+  input[type="email"],
+  input[type="tel"],
+
+  textarea {
+    color: #fff;
+    border-bottom: 1px solid #fff;
+    background-color: #181818;
+  }
+  input[type="text"]::placeholder,
+  input[type="email"]::placeholder,
+  textarea::placeholder {
+    color: #6e6e6e;
+  }
+  input[type="text"]:focus,
+  input[type="text"]:active,
+  input[type="email"]:focus,
+  input[type="email"]:active,
+  textarea:focus,
+  textarea:active {
+    border-bottom: 2px solid #fff;
+  }
+  .rad-subscription-group input,
+  .rad-subscription-group textarea {
+    border: none;
+    background: none;
+  }
+  .rad-subscription-group input[type="text"]:focus,
+  .rad-subscription-group input[type="email"]:focus,
+  .rad-subscription-group input[type="password"]:focus,
+  .rad-subscription-group textarea:focus {
+    outline: none;
+    box-shadow: none;
+    border: none;
+  }
+
+  .posts-list article.summary {
+    color: #c3c3c3;
+  }
+  .post-summary.post-content p,
+  .post-summary.post-content * {
+    color: white;
+  }
+
+  .text-muted {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .dropdown-item.active,
+  .dropdown-item:active,
+  .dropdown-item:focus,
+  .dropdown-item:hover {
+    background-color: $base-color;
+    color: $white;
+  }
+
+  // Blog post meta section dark mode
+  #blog-single #meta {
+    #topics,
+    .tags,
+    .authors {
+      li a {
+        background-color: #2a2a2a;
+        color: #e0e0e0;
+        border: none;
+
+        &:hover {
+          background-color: #3a3a3a;
+          color: #fff;
+        }
+      }
+    }
+
+    .post-authors-inline {
+      color: rgba(255, 255, 255, 0.7);
+
+      a {
+        color: #fff;
+        text-decoration: none;
+
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+    }
+  }
+
+  // General tags styling for dark mode (consistency across all pages)
+  ul.tags,
+  ul.topics,
+  ul.authors,
+  #topics,
+  ul.list-taxonomy {
+    li a {
+      background-color: rgba(255, 255, 255, 0.08);
+      color: #e8e8e8;
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.15);
+        color: #fff;
+        border-color: rgba(255, 255, 255, 0.2);
+        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4), 0 0 12px rgba(255, 255, 255, 0.1);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  // Blog sidebar dark mode improvements
+  .blog-sidebar {
+    .sidebar-section {
+      background: linear-gradient(135deg, rgba(42, 42, 42, 0.6) 0%, rgba(35, 35, 35, 0.7) 100%);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255, 255, 255, 0.05);
+      -webkit-backdrop-filter: blur(10px);
+      backdrop-filter: blur(10px);
+
+      h3 {
+        color: #fff;
+        text-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+        border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+        padding-bottom: 0.5rem;
+      }
+
+      ul.tags li a {
+        background: rgba(255, 255, 255, 0.08);
+        color: #e8e8e8;
+        border: 1px solid rgba(255, 255, 255, 0.12);
+        font-weight: 400;
+
+        &:hover {
+          background: rgba(255, 255, 255, 0.15);
+          color: #fff;
+          border-color: rgba(255, 255, 255, 0.2);
+          box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+          text-decoration: none;
+        }
+      }
+
+      &.recent-posts {
+        ul li {
+          a {
+            color: rgba(255, 255, 255, 0.8);
+            
+            &:hover {
+              color: #fff;
+              text-decoration: underline;
+            }
+          }
+
+          .post-date {
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 0.8rem;
+          }
+        }
+      }
+    }
+  }
+}
+
+/* end dark mode */
+
+/* Scroll-triggered entry animations (rad-animations.js) */
+.rad-waiting {
+  opacity: 0;
+}
+
+.rad-waiting.rad-fade-down {
+  transform: translateY(-20px);
+}
+
+.rad-waiting.rad-scale-down {
+  transform: scale(1.1);
+}
+
+@keyframes radFadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes radFadeDown {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: none; }
+}
+
+@keyframes radScaleDown {
+  from { opacity: 0; transform: scale(1.1); }
+  to { opacity: 1; transform: none; }
+}
+
+.rad-animate.rad-fade-in {
+  animation: radFadeIn 0.4s ease-out both;
+}
+
+.rad-animate.rad-fade-in-long {
+  animation: radFadeIn 0.6s ease-out both;
+}
+
+.rad-animate.rad-fade-down {
+  animation: radFadeDown 0.4s ease-out both;
+}
+
+.rad-animate.rad-scale-down {
+  animation: radScaleDown 0.4s ease-out both;
+}
+
+/* Reduced motion support */
+@media (prefers-reduced-motion: reduce) {
+  /* Disable scroll-triggered animations */
+  .rad-fade-down,
+  .rad-fade-in,
+  .rad-fade-in-long,
+  .rad-scale-down {
+    opacity: 1 !important;
+    transform: none !important;
+    animation: none !important;
+    transition: none !important;
+  }
+
+  .rad-waiting {
+    opacity: 1 !important;
+    transform: none !important;
+  }
+
+  /* Disable page transition overlay */
+  .transition-overlay {
+    transition: none !important;
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  .transition-active .transition-overlay {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  /* Disable hover transforms */
+  .related-post-item:hover,
+  .share-button:hover {
+    transform: none !important;
+  }
+
+  ul.tags li a:hover,
+  ul.topics li a:hover,
+  ul.list-taxonomy li a:hover {
+    transform: none !important;
+  }
+
+}
