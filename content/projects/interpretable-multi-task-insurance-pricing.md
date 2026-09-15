@@ -22,4 +22,4 @@ render = 'never'
 list = 'always'
 +++
 
-Built an interpretable PyTorch multi-task neural additive model using shared feature subnetworks to jointly predict claim frequency and severity on freMTPL data. Evaluated the model with six-fold cross-validation against GLM, GBM, and single-task NAM benchmarks.
+Actuaries would face a trade-off when making insurance pricing: traditional models(GLMs) are transparent without capturing complex nonlinear risk patterns, while flexible machine-learning models can be harder to interpret stakeholders. I explored whether insurers could capture nonlinear risk patterns without giving up model transparency by building a multi-task neural additive model that jointly learns claim frequency and severity while preserving feature-level explanations, using a French motor insurance dataset.

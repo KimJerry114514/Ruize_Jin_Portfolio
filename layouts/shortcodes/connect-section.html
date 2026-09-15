@@ -1,16 +1,33 @@
+{{- $endpoint := .Site.Params.contact.formspree_endpoint | default "" -}}
+{{- $configured := hasPrefix $endpoint "https://formspree.io/f/" -}}
 <section id="contact" class="portfolio-connect" aria-labelledby="connect-title">
   <div class="container">
     <div class="portfolio-connect-inner">
-      <div>
+      <div class="portfolio-connect-intro">
         <p class="portfolio-eyebrow">Contact</p>
         <h2 id="connect-title">Let's connect</h2>
-        <p>Reach me directly by email or through my professional profiles.</p>
+        <div class="portfolio-connect-actions">
+          <a class="btn btn-frameless" href="https://www.linkedin.com/in/ruize-jin-082205377/" target="_blank" rel="noopener noreferrer"><i class="icon-linkedin" aria-hidden="true"></i>LinkedIn</a>
+          <a class="btn btn-frameless" href="https://github.com/KimJerry114514" target="_blank" rel="noopener noreferrer"><i class="icon-square-github" aria-hidden="true"></i>GitHub</a>
+        </div>
       </div>
-      <div class="portfolio-connect-actions">
-        <a class="btn btn-primary" href="mailto:ruize.jin@duke.edu"><i class="icon-email" aria-hidden="true"></i>Email</a>
-        <a class="btn btn-frameless" href="https://www.linkedin.com/in/ruize-jin-082205377/" target="_blank" rel="noopener noreferrer"><i class="icon-linkedin" aria-hidden="true"></i>LinkedIn</a>
-        <a class="btn btn-frameless" href="https://github.com/KimJerry114514" target="_blank" rel="noopener noreferrer"><i class="icon-square-github" aria-hidden="true"></i>GitHub</a>
-      </div>
+      <form class="portfolio-connect-form" data-contact-form method="POST"{{ if $configured }} action="{{ $endpoint }}"{{ end }}>
+        <div class="portfolio-connect-field">
+          <label for="contact-name">Name</label>
+          <input id="contact-name" name="name" type="text" autocomplete="name" required>
+        </div>
+        <div class="portfolio-connect-field">
+          <label for="contact-email">Email</label>
+          <input id="contact-email" name="email" type="email" autocomplete="email" required>
+        </div>
+        <div class="portfolio-connect-field">
+          <label for="contact-message">Message</label>
+          <textarea id="contact-message" name="message" rows="5" required></textarea>
+        </div>
+        <button class="btn btn-primary" type="submit"{{ if not $configured }} disabled{{ end }}>Submit</button>
+      </form>
     </div>
   </div>
 </section>
+{{- $script := resources.Get "js/contact-form.js" | minify | fingerprint -}}
+<script defer src="{{ $script.RelPermalink }}" integrity="{{ $script.Data.Integrity }}" crossorigin="anonymous"></script>

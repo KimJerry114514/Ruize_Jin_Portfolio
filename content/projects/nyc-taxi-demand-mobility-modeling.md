@@ -19,4 +19,4 @@ render = 'never'
 list = 'always'
 +++
 
-An interactive pre-trip prediction system for NYC Yellow Taxi rides. Given a pickup location, destination, and departure time, the system estimates travel time and pre-tip trip cost using a leakage-safe, temporally validated machine-learning pipeline.
+Predict NYC Yellow Taxi trip duration and pre-tip cost before the ride begins — using only pickup, destination, and departure time. Unlike models that rely on information only known after a trip is completed, this system uses only pre-trip features available at prediction time. The final XGBoost models were trained on 10.9M trips and deployed as an interactive prediction tool.

@@ -92,6 +92,13 @@
     </div>
   </section>
 
+  <div class="nyc-taxi-project__section">
+    <div class="nyc-taxi-project__prose">
+      <p>I deployed the final XGBoost models as a FastAPI service, packaged with Docker, and hosted on Google Cloud Run. Users enter real NYC locations and a departure time. The backend maps those locations to NYC taxi zones, builds the same 27 features used during training, and predicts trip duration and pre-tip cost. I also use Google Routes to show route distance and Google travel time as extra context. These values are shown separately and are not used by the ML model.</p>
+      <p>Production secrets are stored in Google Secret Manager, and the public API is protected with rate limits, quotas, CORS rules, and controlled autoscaling.</p>
+    </div>
+  </div>
+
   <section class="nyc-taxi-project__section" aria-labelledby="taxi-why-project">
     <div class="nyc-taxi-project__prose">
       <p class="nyc-taxi-project__section-label">Case study</p>

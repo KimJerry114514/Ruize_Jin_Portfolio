@@ -1,7 +1,7 @@
 {{ define "main" }}
 {{ $github := "https://github.com/KimJerry114514/Pure-Premium-Prediction-with-Multi-Learning-Neural-Additive-Model.git" }}
-{{ $thesis := "research/insurance-pricing/Ruize-Jin-Undergraduate-Thesis-English.docx" | relURL }}
-{{ $slides := "research/insurance-pricing/Ruize-Jin-Thesis-Defense-English.pptx" | relURL }}
+{{ $thesis := "research/insurance-pricing/Ruize-Jin-Undergraduate-Thesis-English.pdf" | relURL }}
+{{ $slides := "research/insurance-pricing/Ruize-Jin-Thesis-Defense-English.pdf" | relURL }}
 <article id="main-content" class="insurance-case-study">
   <header class="insurance-case-study__hero">
     <p class="insurance-case-study__eyebrow">Insurance · Interpretable machine learning</p>
@@ -10,8 +10,8 @@
     <p class="insurance-case-study__technology">Python · R · PyTorch · Multi-Task Learning · Neural Additive Models · SHAP</p>
     <nav class="insurance-case-study__actions" aria-label="Insurance research materials">
       <a href="{{ $github }}">View GitHub <span aria-hidden="true">→</span></a>
-      <a href="{{ $thesis }}">Download English Thesis <span aria-hidden="true">→</span></a>
-      <a href="{{ $slides }}">Download Defense Slides <span aria-hidden="true">→</span></a>
+      <a href="{{ $thesis }}">View English Thesis <span aria-hidden="true">→</span></a>
+      <a href="{{ $slides }}">View Defense Slides <span aria-hidden="true">→</span></a>
     </nav>
   </header>
 
@@ -21,6 +21,12 @@
       <p>Motor insurance pricing sits at an uncomfortable intersection. Traditional actuarial models such as generalized linear models are transparent and easy to audit, but their linear structure can struggle with nonlinear risk relationships. More flexible machine-learning models can capture those relationships, but often at the cost of interpretability.</p>
       <p>My undergraduate thesis explored whether those two goals have to be in conflict.</p>
       <p>I developed a Multi-Task Neural Additive Model (MTL-NAM) that jointly models claim frequency and claim severity while preserving an additive, feature-level structure. The goal was not simply to improve predictive performance, but to build a model whose learned risk effects could still be inspected and explained.</p>
+      {{ with resources.Get "images/projects/insurance-pricing/interpretability-performance-tradeoff.png" }}
+        <figure class="insurance-case-study__figure">
+          <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="Machine learning models positioned by interpretability and performance" loading="lazy" decoding="async">
+          <figcaption>tradeoff between interpretability and performance for insurance predictive models</figcaption>
+        </figure>
+      {{ end }}
       <aside class="insurance-case-study__question" aria-label="Research question">
         <strong>Research question:</strong>
         <p>Can shared learning across frequency and severity improve insurance pricing without turning the model into a black box?</p>
@@ -231,8 +237,8 @@
       <h2 id="research-materials">Research Materials</h2>
       <nav class="insurance-case-study__materials" aria-label="Download research materials">
         <a href="{{ $github }}">View GitHub <span aria-hidden="true">→</span></a>
-        <a href="{{ $thesis }}">Download English Thesis <span aria-hidden="true">→</span></a>
-        <a href="{{ $slides }}">Download Defense Slides <span aria-hidden="true">→</span></a>
+        <a href="{{ $thesis }}">View English Thesis <span aria-hidden="true">→</span></a>
+        <a href="{{ $slides }}">View Defense Slides <span aria-hidden="true">→</span></a>
       </nav>
     </div>
   </section>

@@ -88,6 +88,10 @@ logo_text2 = 'Jin'
 # Color scheme: default | ocean | forest | rose | slate | midnight | warm
 colorScheme = 'default'
 
+[params.contact]
+# Set to the verified Formspree form URL to enable submissions.
+formspree_endpoint = 'https://formspree.io/f/xbgjnqlj'
+
 # Enable the live color scheme switcher (for the demo site)
 [params.colorSchemeSwitcher]
 enable = false
@@ -193,6 +197,10 @@ weight = 2
 name = "CV"
 URL = "/resume/Ruize-Jin-Resume.pdf"
 weight = 3
+[[languages.en.menus.header]]
+name = "Contact"
+URL = "/#contact"
+weight = 4
 
 [[languages.en.menus.footer]]
 name = "Home"
