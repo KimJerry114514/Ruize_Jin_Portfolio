@@ -21,3 +21,10 @@
 <script defer src="{{ $taxiScript.RelPermalink }}" integrity="{{ $taxiScript.Data.Integrity }}" crossorigin="anonymous" data-nyc-taxi-api-base="https://nyc-taxi-mobility-94622883081.us-east1.run.app"></script>
   {{- end }}
 {{- end }}
+
+{{- if eq .Layout "prompt2print" }}
+  {{- $prompt2printStyle := resources.Get "css/prompt2print.css" | minify | fingerprint -}}
+  {{- if $prompt2printStyle }}
+<link rel="stylesheet" href="{{ $prompt2printStyle.RelPermalink }}" integrity="{{ $prompt2printStyle.Data.Integrity }}" crossorigin="anonymous">
+  {{- end }}
+{{- end }}

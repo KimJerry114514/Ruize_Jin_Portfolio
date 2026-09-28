@@ -1,0 +1,76 @@
+{{ define "main" }}
+{{ $github := "https://github.com/Jinyu-Liu-Jinyu-Liu/Prompt2Print" }}
+{{ $poster := "research/prompt2print/Prompt2Print-NC-Analytics-AI-Day-2026.pdf" | relURL }}
+<article id="main-content" class="prompt2print-case-study">
+  <header class="prompt2print-case-study__hero">
+    <h1>{{ .Title }}</h1>
+    <p class="prompt2print-case-study__subtitle">A Guardrailed AI Workflow for Typography-to-STL Generation</p>
+    <p class="prompt2print-case-study__hook">Can AI design something creative with trust?</p>
+    <p class="prompt2print-case-study__intro">Prompt2Print turns short text prompts into typography-based 3D designs. The AI proposes bounded aesthetic parameters, while OpenSCAD and deterministic validation rules construct and verify the actual geometry. Failed candidates can enter a bounded repair loop before the user selects a final STL.</p>
+    <p class="prompt2print-case-study__principle">AI proposes. Geometry rules constrain. Humans choose.</p>
+    <p class="prompt2print-case-study__context">Built with <strong>Jinyu Liu</strong> and presented at the <strong>2026 NC Analytics &amp; AI Day</strong> as a Duke University student project.</p>
+    <nav class="prompt2print-case-study__actions" aria-label="Prompt2Print project resources">
+      <a href="{{ $github }}" target="_blank" rel="noopener noreferrer">View GitHub <span aria-hidden="true">→</span></a>
+      <a href="{{ $poster }}">View Conference Poster <span aria-hidden="true">→</span></a>
+    </nav>
+  </header>
+
+  <section class="prompt2print-case-study__section" aria-labelledby="prompt2print-workflow">
+    <div class="prompt2print-case-study__prose">
+      <p class="prompt2print-case-study__section-label">How it works</p>
+      <h2 id="prompt2print-workflow">User Input → AI Design → Validation → OpenSCAD → Geometry Checks → Repair → STL Output</h2>
+      <p>The AI generates four structured design proposals without directly creating or validating the final geometry. Deterministic software checks the proposed parameters, builds the STL with OpenSCAD, and evaluates the resulting artifact. Failed candidates can be revised for up to two repair rounds and revalidated before a final artifact is selected.</p>
+    </div>
+    {{ with resources.Get "images/projects/prompt2print/workflow.png" }}
+      <figure class="prompt2print-case-study__figure prompt2print-case-study__figure--workflow">
+        <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="Prompt2Print workflow from user input through bounded AI proposals, deterministic geometry validation, repair, and STL download" loading="lazy" decoding="async">
+      </figure>
+    {{ end }}
+  </section>
+
+  <section class="prompt2print-case-study__section" aria-labelledby="prompt2print-results">
+    <div class="prompt2print-case-study__prose">
+      <h2 id="prompt2print-results">Results</h2>
+    </div>
+    <dl class="prompt2print-case-study__metrics" aria-label="Prompt2Print conference benchmark results">
+      <div>
+        <dt>STL candidates evaluated</dt>
+        <dd>160</dd>
+      </div>
+      <div>
+        <dt>Overall pipeline yield</dt>
+        <dd>81.9% → 97.5%</dd>
+      </div>
+      <div>
+        <dt>Final geometry-gate pass rate</dt>
+        <dd>85.0% → 98.1%</dd>
+      </div>
+    </dl>
+    <div class="prompt2print-case-study__prose prompt2print-case-study__prose--after">
+      <p>The conference benchmark covered <strong>40 requests and 160 candidates</strong>, with <strong>23 candidates adopting repaired revisions</strong>. Three selected artifacts were also successfully printed at the <strong>Duke Innovation Co-Lab</strong>.</p>
+    </div>
+  </section>
+
+  <section class="prompt2print-case-study__section" aria-labelledby="prompt2print-conference">
+    <div class="prompt2print-case-study__conference">
+      {{ with resources.Get "images/projects/prompt2print/conference.jpg" }}
+        <figure class="prompt2print-case-study__figure prompt2print-case-study__figure--conference">
+          <img src="{{ .RelPermalink }}" width="{{ .Width }}" height="{{ .Height }}" alt="Ruize Jin and Jinyu Liu presenting the Prompt2Print poster at 2026 NC Analytics and AI Day" loading="lazy" decoding="async">
+        </figure>
+      {{ end }}
+      <div class="prompt2print-case-study__prose">
+        <h2 id="prompt2print-conference">Presented at 2026 NC Analytics &amp; AI Day</h2>
+        <p>Prompt2Print was presented as a student poster project at the <strong>2026 NC Analytics &amp; AI Day</strong>. The poster summarizes the workflow, validation strategy, bounded repair loop, benchmark results, and early physical-print evaluation.</p>
+        <a class="prompt2print-case-study__text-link" href="{{ $poster }}">View Conference Poster <span aria-hidden="true">→</span></a>
+      </div>
+    </div>
+  </section>
+
+  <section class="prompt2print-case-study__section prompt2print-case-study__section--source" aria-label="Latest implementation">
+    <div class="prompt2print-case-study__prose">
+      <p>The conference poster represents the evaluated version presented at the event. The GitHub repository contains the latest implementation and technical documentation.</p>
+      <a class="prompt2print-case-study__button" href="{{ $github }}" target="_blank" rel="noopener noreferrer">View GitHub <span aria-hidden="true">→</span></a>
+    </div>
+  </section>
+</article>
+{{ end }}

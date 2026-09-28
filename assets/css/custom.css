@@ -1000,6 +1000,15 @@ html body #breadcrumb-bar {
   font-weight: 650;
 }
 
+.portfolio-project-metadata {
+  order: 5;
+  margin: 1rem 0 0;
+  color: var(--bs-secondary-color, #686868);
+  font-size: 0.82rem;
+  font-weight: 650;
+  line-height: 1.45;
+}
+
 .portfolio-project-tech span:not(:last-child)::after {
   margin-left: 0.45rem;
   color: var(--portfolio-rule);
@@ -1007,7 +1016,7 @@ html body #breadcrumb-bar {
 }
 
 .portfolio-project-cta {
-  order: 5;
+  order: 6;
   align-self: flex-start;
   margin-top: 1.75rem;
 }
@@ -1071,6 +1080,12 @@ html body #breadcrumb-bar {
 
 .portfolio-project-image--mobility {
   object-fit: cover;
+}
+
+.portfolio-project-image--prompt2print {
+  padding: clamp(0.75rem, 1.5vw, 1.5rem);
+  background: #fff;
+  object-fit: contain;
 }
 
 .portfolio-life-list {
@@ -1558,7 +1573,8 @@ html[data-bs-theme="dark"] .kitchen-country-panel {
 
   .portfolio-project-summary { order: 3; }
   .portfolio-project-tech { order: 4; }
-  .portfolio-project-cta { order: 5; }
+  .portfolio-project-metadata { order: 5; }
+  .portfolio-project-cta { order: 6; }
 
   .portfolio-home-life-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -1747,6 +1763,10 @@ html[data-bs-theme="dark"] .kitchen-country-panel {
 
   .portfolio-project-spread--mobility .portfolio-project-visual {
     height: clamp(240px, 78vw, 320px);
+  }
+
+  .portfolio-project-spread--prompt2print .portfolio-project-visual {
+    height: clamp(250px, 72vw, 340px);
   }
 
   .portfolio-hero-actions .btn {

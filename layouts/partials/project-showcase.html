@@ -15,6 +15,9 @@
       <div class="portfolio-project-tech" aria-label="Technologies used">
         {{ range split $project.Params.technologies " · " }}<span>{{ . }}</span>{{ end }}
       </div>
+      {{ with $project.Params.metadata }}
+        <p class="portfolio-project-metadata">{{ . }}</p>
+      {{ end }}
       {{ with $project.Params.project_url }}
         {{- $ctaText := $project.Params.cta_text | default "View Project" -}}
         {{- $projectURL := relURL (strings.TrimPrefix "/" .) -}}
