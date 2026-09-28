@@ -2,11 +2,11 @@
 date = '2026-09-27T00:00:00-04:00'
 weight = 1
 draft = false
-title = 'Prompt2Print — Guardrailed AI for 3D Printing'
+title = 'Prompt2Print: A Guardrailed AI Workflow for Typography-to-STL Generation'
 projectType = 'Applied AI Project'
 context = 'Generative Design · 3D Printing'
-technologies = 'Python · FastAPI · React · TypeScript · OpenSCAD · GPT · PrusaSlicer'
-hook = 'Can AI design something creative without being trusted to decide whether it is physically valid?'
+technologies = 'Python · FastAPI · LLM Agents · Structured Outputs · AI Guardrails · OpenSCAD · React · TypeScript'
+hook = 'Turning Natural Language into Validated 3D-Printable Geometry'
 metadata = 'Presented at 2026 NC Analytics & AI Day'
 visualStyle = 'prompt2print'
 image = 'images/projects/prompt2print/workflow.png'
@@ -19,4 +19,4 @@ render = 'never'
 list = 'always'
 +++
 
-Prompt2Print turns short text prompts into typography-based 3D designs. The AI proposes bounded aesthetic parameters, while OpenSCAD and deterministic validation rules construct and verify the actual geometry.
+Prompt2Print turns short text prompts into typography-based 3D designs through a guardrailed AI workflow. An LLM proposes schema-constrained design parameters, while deterministic validation and OpenSCAD construct, evaluate, and repair the resulting geometry before STL output.
