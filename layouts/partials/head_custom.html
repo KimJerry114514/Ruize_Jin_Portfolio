@@ -28,3 +28,10 @@
 <link rel="stylesheet" href="{{ $prompt2printStyle.RelPermalink }}" integrity="{{ $prompt2printStyle.Data.Integrity }}" crossorigin="anonymous">
   {{- end }}
 {{- end }}
+
+{{- if or (eq .Layout "steam-player-engagement") (and .IsSection (eq .Section "projects")) }}
+  {{- $steamStyle := resources.Get "css/steam-player-engagement.css" | minify | fingerprint -}}
+  {{- if $steamStyle }}
+<link rel="stylesheet" href="{{ $steamStyle.RelPermalink }}" integrity="{{ $steamStyle.Data.Integrity }}" crossorigin="anonymous">
+  {{- end }}
+{{- end }}

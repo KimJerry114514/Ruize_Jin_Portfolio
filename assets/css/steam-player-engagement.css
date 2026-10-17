@@ -1,0 +1,114 @@
+/* New Steam landing spread only; existing project spreads retain their rules. */
+.portfolio-project-spread--steam .portfolio-project-spread__grid {
+  height: auto;
+  align-items: center;
+}
+
+.portfolio-project-spread--steam .portfolio-project-visual,
+.portfolio-project-spread--steam .portfolio-project-visual picture {
+  height: auto !important;
+}
+
+.portfolio-project-spread--steam .portfolio-project-image--steam {
+  height: auto !important;
+  background: #fff;
+  object-fit: contain;
+}
+
+.steam-case-study {
+  width: 100%;
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 3rem 0 4rem;
+}
+
+.steam-case-study * { box-sizing: border-box; }
+.steam-case-study__hero { max-width: 980px; padding-bottom: 2.5rem; }
+.steam-case-study h1 {
+  margin: 0;
+  font-size: clamp(2.6rem, 4.6vw, 4rem);
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -.035em;
+}
+.steam-case-study__subtitle {
+  max-width: 820px;
+  margin: 1.25rem 0 0;
+  color: var(--portfolio-accent);
+  font-size: clamp(1.1rem, 1.6vw, 1.3rem);
+  font-weight: 650;
+  line-height: 1.5;
+}
+.steam-case-study__intro { max-width: 790px; margin: 1.25rem 0 0; }
+.steam-case-study p,
+.steam-case-study li { font-size: 1.08rem; line-height: 1.72; }
+.steam-case-study p { margin-bottom: 1.25rem; }
+.steam-case-study li + li { margin-top: .5rem; }
+.steam-case-study ul { padding-left: 1.3rem; margin-bottom: 1.5rem; }
+.steam-case-study__prose { max-width: 790px; }
+.steam-case-study__section { padding: 3rem 0; border-top: 1px solid var(--portfolio-rule); }
+.steam-case-study__presentation { padding-top: 2.5rem; }
+.steam-case-study h2 {
+  margin: 0 0 1.5rem;
+  font-size: clamp(2rem, 3.8vw, 3rem);
+  font-weight: 700;
+  line-height: 1.14;
+  letter-spacing: -.025em;
+}
+.steam-case-study h3 { margin: 0 0 1rem; font-size: 1.35rem; font-weight: 650; line-height: 1.4; }
+.steam-case-study__actions { display: flex; flex-wrap: wrap; gap: .75rem 1.5rem; margin-top: 1.75rem; }
+.steam-case-study__actions a {
+  display: inline-flex;
+  align-items: center;
+  gap: .4rem;
+  min-height: 44px;
+  color: var(--portfolio-accent);
+  font-weight: 700;
+  text-decoration: none;
+  text-underline-offset: .3rem;
+}
+.steam-case-study__actions a:hover,
+.steam-case-study__actions a:focus-visible { text-decoration: underline; }
+.steam-case-study__hero .steam-case-study__actions { margin-top: 1rem; }
+.steam-case-study__actions a.steam-case-study__secondary-action { color: var(--bs-secondary-color, #686868); font-size: .85rem; font-weight: 400; }
+.steam-case-study__metrics {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+  margin: 0 0 1.75rem;
+}
+.steam-case-study__metrics > div { display: flex; flex-direction: column; padding: 1.5rem; border: 1px solid var(--portfolio-rule); }
+.steam-case-study__metrics dt { font-size: .9rem; font-weight: 500; line-height: 1.5; }
+.steam-case-study__metrics dd { order: -1; margin: 0 0 .75rem; color: var(--portfolio-accent); font-size: clamp(2.25rem, 3.4vw, 3rem); font-weight: 700; line-height: 1.15; }
+.steam-case-study .steam-case-study__caveat { font-size: .92rem; line-height: 1.6; }
+.steam-case-study__segments { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; margin: 0 0 1.75rem; }
+.steam-case-study__segments > section { padding: 1.75rem; border: 1px solid var(--portfolio-rule); }
+.steam-case-study__segments h3 { display: flex; flex-wrap: wrap; justify-content: space-between; gap: .5rem 1rem; }
+.steam-case-study__segments h3 span { color: var(--portfolio-accent); }
+.steam-case-study__segments p { margin: 0; }
+.steam-case-study__team h2 { font-size: 1.25rem; letter-spacing: 0; }
+.steam-case-study__team p { font-size: .92rem; line-height: 1.6; }
+.steam-case-study__pdf { display: block; width: 100%; height: auto; aspect-ratio: 16 / 9; max-height: 640px; border: 1px solid var(--portfolio-rule); }
+.steam-case-study__mobile-preview { display: none; }
+
+@media (max-width: 1199.98px) {
+  .portfolio-project-spread--steam .portfolio-project-spread__grid { grid-template-columns: minmax(0, 1fr); }
+  .portfolio-project-spread--steam .portfolio-project-visual { max-width: 850px; }
+}
+
+@media (max-width: 767.98px) {
+  .steam-case-study { padding: 2rem 0 3rem; }
+  .steam-case-study__hero { padding-bottom: 2rem; }
+  .steam-case-study h1 { font-size: clamp(2rem, 8.6vw, 2.7rem); }
+  .steam-case-study h2 { font-size: 2rem; }
+  .steam-case-study__team h2 { font-size: 1.25rem; }
+  .steam-case-study p,
+  .steam-case-study li { font-size: 1rem; line-height: 1.68; }
+  .steam-case-study__section { padding: 2.5rem 0; }
+  .steam-case-study__segments,
+  .steam-case-study__metrics { grid-template-columns: minmax(0, 1fr); }
+  .steam-case-study__segments > section { padding: 1.4rem; }
+  .steam-case-study__pdf { display: none; }
+  .steam-case-study__mobile-preview { display: block; }
+  .steam-case-study__mobile-preview img { display: block; width: 100%; height: auto; border: 1px solid var(--portfolio-rule); }
+}

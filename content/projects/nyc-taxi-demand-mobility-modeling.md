@@ -1,6 +1,6 @@
 +++
 date = '2025-03-01T00:00:00-05:00'
-weight = 2
+weight = 3
 draft = false
 title = 'NYC Taxi Mobility Intelligence'
 projectType = 'Data Product'

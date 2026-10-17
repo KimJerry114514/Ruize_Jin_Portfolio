@@ -1,6 +1,6 @@
 +++
 date = '2025-09-01T00:00:00-04:00'
-weight = 3
+weight = 4
 draft = false
 title = 'Interpretable Multi-Task Insurance Pricing'
 projectType = 'Research Project'

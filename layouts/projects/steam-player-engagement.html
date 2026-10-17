@@ -1,0 +1,59 @@
+{{ define "main" }}
+{{ $github := "https://github.com/KimJerry114514/Steam-Player-Engagement-Intelligence" }}
+{{ $pdf := "research/steam-player-engagement/steam-project.pdf" | relURL }}
+{{ $pptx := "research/steam-player-engagement/steam-project.pptx" | relURL }}
+<article id="main-content" class="steam-case-study">
+  <header class="steam-case-study__hero">
+    <h1>{{ .Title }}</h1>
+    <p class="steam-case-study__subtitle">Predicting Player Engagement and Identifying At-Risk Players on Steam</p>
+    <p class="steam-case-study__intro">Negative reviews do not necessarily mean players will stop playing. We combined player behavior with NLP-derived complaint signals to predict observed post-review engagement and identify which negative reviewers may require different product or support responses.</p>
+    <nav class="steam-case-study__actions" aria-label="Steam project resources">
+      <a href="{{ $github }}">View GitHub <span aria-hidden="true">→</span></a>
+      <a href="{{ $pdf }}">View Presentation <span aria-hidden="true">→</span></a>
+    </nav>
+  </header>
+
+  <section class="steam-case-study__section steam-case-study__presentation" aria-labelledby="steam-presentation">
+    <h2 id="steam-presentation">Final Presentation</h2>
+    <object class="steam-case-study__pdf" data="{{ $pdf }}" type="application/pdf" aria-label="Six-slide Steam project presentation">
+      <p>Open the <a href="{{ $pdf }}">full presentation PDF</a> to view the slides.</p>
+    </object>
+    {{ with resources.Get "images/projects/steam-player-engagement/four-player-engagement-segments.png" }}
+      {{ $preview := .Resize "1200x webp" }}
+      <a class="steam-case-study__mobile-preview" href="{{ $pdf }}" aria-label="View the full Steam presentation PDF">
+        <img src="{{ $preview.RelPermalink }}" width="{{ $preview.Width }}" height="{{ $preview.Height }}" alt="Preview of the four player profiles from the six-slide presentation" loading="lazy" decoding="async">
+      </a>
+    {{ end }}
+    <nav class="steam-case-study__actions" aria-label="Presentation formats">
+      <a href="{{ $pdf }}">View Full Presentation <span aria-hidden="true">→</span></a>
+      <a class="steam-case-study__secondary-action" href="{{ $pptx }}" download>Download Original PPTX <span aria-hidden="true">→</span></a>
+    </nav>
+  </section>
+
+  <section class="steam-case-study__section" aria-labelledby="steam-results">
+    <h2 id="steam-results">Key Results</h2>
+    <dl class="steam-case-study__metrics" aria-label="Final 2023 test results">
+      <div><dt>2023 Test ROC-AUC</dt><dd>0.824</dd></div>
+      <div><dt>Observed engagement in the top predicted-engagement decile</dt><dd>88.7%</dd></div>
+      <div><dt>Lift vs. random selection</dt><dd>2.38×</dd></div>
+    </dl>
+    <div class="steam-case-study__prose">
+      <p>LightGBM with structured and NLP features performed best. Complaint signals added predictive value beyond structured player features, while the final model maintained strong ranking performance on newer 2023 reviews.</p>
+      <p class="steam-case-study__caveat">The engagement target is derived from historical playtime snapshots and should not be interpreted as confirmed activity exactly 30 days after a review.</p>
+      <p class="steam-case-study__caveat">The model also showed calibration drift on newer data, indicating that periodic recalibration would be necessary in deployment.</p>
+    </div>
+  </section>
+
+  <section class="steam-case-study__section" aria-labelledby="steam-segments">
+    <h2 id="steam-segments">Four Player Profiles</h2>
+    <div class="steam-case-study__segments">
+      <section><h3>Hardcore <span>36.06%</span></h3><p>High prior playtime · High predicted engagement</p></section>
+      <section><h3>Dropout <span>6.59%</span></h3><p>High prior playtime · Low predicted engagement</p></section>
+      <section><h3>New Blood <span>8.94%</span></h3><p>Low prior playtime · High predicted engagement</p></section>
+      <section><h3>Nobody <span>48.41%</span></h3><p>Low prior playtime · Low predicted engagement</p></section>
+    </div>
+    <p class="steam-case-study__prose">These profiles help distinguish players who may require different product or support responses. They are relative engagement profiles, not confirmed churn labels.</p>
+  </section>
+
+</article>
+{{ end }}
