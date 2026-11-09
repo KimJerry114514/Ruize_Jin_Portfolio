@@ -1838,3 +1838,16 @@ html[data-bs-theme="dark"] .kitchen-country-panel {
   font-size: 0.95rem;
   font-variant-numeric: tabular-nums;
 }
+
+.portfolio-project-spread--alsewhere .portfolio-project-visual {
+  align-self: center;
+  height: auto;
+}
+
+.portfolio-project-spread--alsewhere .portfolio-project-visual picture {
+  height: auto;
+}
+
+.portfolio-project-spread--alsewhere .portfolio-project-image--alsewhere {
+  height: auto !important;
+}
