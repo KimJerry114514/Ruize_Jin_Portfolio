@@ -1778,3 +1778,63 @@ html[data-bs-theme="dark"] .kitchen-country-panel {
     width: auto;
   }
 }
+
+/* Alsewhere project page */
+.alsewhere-note {
+  max-width: 790px;
+  margin: 1rem 0 0;
+  font-size: 0.95rem;
+  line-height: 1.6;
+  opacity: 0.8;
+}
+
+.alsewhere-deck {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  padding-bottom: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+}
+
+.alsewhere-deck__slide {
+  flex: 0 0 min(100%, 860px);
+  margin: 0;
+  scroll-snap-align: start;
+}
+
+.alsewhere-deck__slide img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border: 1px solid var(--portfolio-rule, rgba(127, 127, 127, 0.24));
+  border-radius: 6px;
+}
+
+.alsewhere-deck__controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 0.75rem;
+}
+
+.alsewhere-deck__button {
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid var(--portfolio-rule, rgba(127, 127, 127, 0.24));
+  border-radius: 50%;
+  background: transparent;
+  color: var(--portfolio-accent, #478079);
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+
+.alsewhere-deck__button:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.alsewhere-deck__count {
+  font-size: 0.95rem;
+  font-variant-numeric: tabular-nums;
+}

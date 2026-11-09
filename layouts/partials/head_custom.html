@@ -22,7 +22,7 @@
   {{- end }}
 {{- end }}
 
-{{- if eq .Layout "prompt2print" }}
+{{- if or (eq .Layout "prompt2print") (eq .Layout "alsewhere") }}
   {{- $prompt2printStyle := resources.Get "css/prompt2print.css" | minify | fingerprint -}}
   {{- if $prompt2printStyle }}
 <link rel="stylesheet" href="{{ $prompt2printStyle.RelPermalink }}" integrity="{{ $prompt2printStyle.Data.Integrity }}" crossorigin="anonymous">

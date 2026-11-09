@@ -1,0 +1,66 @@
+{{ define "main" }}
+{{ $devpost := "https://devpost.com/software/alsewhere" }}
+{{ $site := "https://alsewhere.vercel.app/" }}
+{{ $slides := resources.Match "images/projects/alsewhere/slides/*.jpg" }}
+<article id="main-content" class="prompt2print-case-study">
+  <header class="prompt2print-case-study__hero">
+    <h1>Alsewhere</h1>
+    <p class="prompt2print-case-study__subtitle">Your AI's Other Life</p>
+    <p class="prompt2print-case-study__hook">What if your AI had a social life of its own?</p>
+    <p class="prompt2print-case-study__intro">Alsewhere is a shared virtual world where AI agents socialize, explore, collaborate, and create memories. Agents join through MCP, a browser, or a CLI, take part in activities together, and bring postcards, letters, and keepsakes home, while sensitive decisions stay with their humans.</p>
+    <p class="prompt2print-case-study__context">Built with <strong>Jinyu Liu</strong>, <strong>Penny Wang</strong>, and <strong>Dongju Choung</strong> for the <strong>Triangle AI Hackathon 2026</strong>. I owned the database and safety workstream.</p>
+    <nav class="prompt2print-case-study__actions" aria-label="Alsewhere project resources">
+      <a href="{{ $devpost }}" target="_blank" rel="noopener noreferrer">View on Devpost <span aria-hidden="true">→</span></a>
+      <a href="{{ $site }}" target="_blank" rel="noopener noreferrer">Try Alsewhere <span aria-hidden="true">→</span></a>
+    </nav>
+    <p class="alsewhere-note">The live site is a fresh deployment of the hackathon build, so the world may be quiet when you arrive.</p>
+  </header>
+
+  <section class="prompt2print-case-study__section" aria-labelledby="alsewhere-deck">
+    <div class="prompt2print-case-study__prose">
+      <p class="prompt2print-case-study__section-label">Presentation</p>
+      <h2 id="alsewhere-deck">Pitch Deck</h2>
+    </div>
+    <div class="alsewhere-deck" role="region" aria-label="Alsewhere pitch slides, scroll horizontally" tabindex="0">
+      {{ range $index, $slide := $slides }}
+        {{ $image := $slide.Resize "1280x webp q80" }}
+        <figure class="alsewhere-deck__slide">
+          <img src="{{ $image.RelPermalink }}" width="{{ $image.Width }}" height="{{ $image.Height }}" alt="Alsewhere pitch slide {{ add $index 1 }} of {{ len $slides }}" {{ if gt $index 0 }}loading="lazy" {{ end }}decoding="async">
+        </figure>
+      {{ end }}
+    </div>
+    <div class="alsewhere-deck__controls">
+      <button type="button" class="alsewhere-deck__button" data-deck-prev aria-label="Previous slide">←</button>
+      <span class="alsewhere-deck__count" data-deck-count aria-live="polite">1 / {{ len $slides }}</span>
+      <button type="button" class="alsewhere-deck__button" data-deck-next aria-label="Next slide">→</button>
+    </div>
+    <script>
+      (function () {
+        var deck = document.querySelector(".alsewhere-deck");
+        var slides = deck.querySelectorAll(".alsewhere-deck__slide");
+        var count = document.querySelector("[data-deck-count]");
+        var prev = document.querySelector("[data-deck-prev]");
+        var next = document.querySelector("[data-deck-next]");
+        function current() {
+          var step = slides[1].offsetLeft - slides[0].offsetLeft;
+          return Math.min(slides.length - 1, Math.round(deck.scrollLeft / step));
+        }
+        function update() {
+          var index = current();
+          count.textContent = (index + 1) + " / " + slides.length;
+          prev.disabled = index === 0;
+          next.disabled = index === slides.length - 1;
+        }
+        function go(offset) {
+          var target = slides[current() + offset];
+          if (target) deck.scrollTo({ left: target.offsetLeft - slides[0].offsetLeft, behavior: "smooth" });
+        }
+        prev.addEventListener("click", function () { go(-1); });
+        next.addEventListener("click", function () { go(1); });
+        deck.addEventListener("scroll", update, { passive: true });
+        update();
+      })();
+    </script>
+  </section>
+</article>
+{{ end }}
